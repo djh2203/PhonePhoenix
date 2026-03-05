@@ -1,0 +1,6 @@
+Flask
+SpeechRecognition
+baidu-aip
+PyAudio
+requests
+# pillow  # 可选，如果需要处理图片可以取消注释
