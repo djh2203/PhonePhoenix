@@ -279,7 +279,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ---
 
 ## 📸 界面预览 | Screenshots
-![效果图](https://imgur.com/a/mPppFVm)
+![效果图](images/Screenshots.png)
 ---
 
 ## 📬 联系方式 | Contact
