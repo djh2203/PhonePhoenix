@@ -1,0 +1,54 @@
+{
+  "baidu_speech": {
+    "app_id": "YOUR_APP_ID",
+    "api_key": "YOUR_API_KEY",
+    "secret_key": "YOUR_SECRET_KEY"
+  },
+  "volcengine": {
+    "api_key": "YOUR_API_KEY",
+    "url": "https://ark.cn-beijing.volces.com/api/v3/chat/completions",
+    "model": "doubao-seed-1-8-251228"
+  },
+  "wake_words": ["曼波", "慢波", "慢播", "快播", "老大", "牢大", "老打", "劳达", "牢打", "牢答", "漫步", "万播", "万波", "汉播", "汉波", "小黑", "嘿嘿"],
+  "energy_threshold": 700,
+  "timeouts": {
+    "listen_timeout": 5,
+    "listen_phrase_time_limit": 5,
+    "network_timeout": 60,
+    "retry_delay": 2,
+    "music_check_interval": 1
+  },
+  "retries": 2,
+  "paths": {
+    "audio_dir": "/data/data/com.termux/files/home/answers",
+    "manbo_audio": "/data/data/com.termux/files/home/manbo.mp3",
+    "zaijian_audio": "/data/data/com.termux/files/home/zaijian.mp3"
+  },
+  "other": {
+    "chunk_size": 1024,
+    "sample_rate": 16000,
+    "silence_duration": 2,
+    "max_tokens": 150,
+    "temperature": 0.7
+  },
+  "system_prompt": "你是一个名叫曼波的极其风趣幽默无厘头的角色。请用简洁幽默的方式回答，每次回复不超过30个词。",
+  "audio_commands": {
+    "招呼": "dzh.mp3",
+    "坐下": "zx.mp3",
+    "对不起": "dbq.mp3",
+    "闭嘴": "bz.mp3",
+    "听话": "th.mp3",
+    "真棒": "zb.mp3",
+    "晚安": "wa.mp3",
+    "在吗": "zm.mp3",
+    "学习": "xx.mp3",
+    "疑惑": "yh.mp3",
+    "才艺": "cy.mp3",
+    "轲秒": "km.mp3",
+    "柯苗": "km.mp3",
+    "开大": "kd.mp3",
+    "挡路": "dl.mp3",
+    "害怕": "hp.mp3",
+    "强": "q.mp3"
+  }
+}
