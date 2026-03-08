@@ -173,6 +173,9 @@ PhonePhoenix/
 ├── LICENSE                # MIT 许可证 | MIT License
 ├── README.md              # 本文档 | This file
 ├── index.html             # Web 界面 | Web interface (should be placed in the same directory as app.py)
+├── c4boom.mp3             # CS2 C4爆炸音效 | CS2 C4 Explosion Sound Effect
+├── manbo.mp3              # 曼波唤醒音效（可加） | Mambo Wake-Up Sound Effect (Optional)
+├── zaijian.mp3            # CS2 C4爆炸音效 | Mambo Program Exit Sound Effect
 └── answers/               # 音频文件存放目录（可配置） | Audio files directory (configurable)
     ├── dzh.mp3
     ├── zx.mp3
