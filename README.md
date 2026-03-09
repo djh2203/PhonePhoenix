@@ -62,8 +62,8 @@ Install Termux and Termux:API on your phone, then open Termux and run the follow
 # 更新包列表并升级所有包
 pkg update && pkg upgrade -y
 
-# 安装基础工具：git, python, pulseaudio (音频支持), termux-api (硬件访问), sox (音频处理)
-pkg install git python pulseaudio termux-api sox -y
+# 安装基础工具：git, python, pulseaudio (音频支持), termux-api (硬件访问), sox (音频处理)等
+pkg install git python pulseaudio termux-api sox python-pip portaudio clang binutils -y
 
 ```markdown
 通过 SSH 远程管理（可选）
@@ -95,9 +95,6 @@ cd PhonePhoenix
 ### 3. 安装 Python 依赖
 
 ```bash
-# 升级 pip
-pip install --upgrade pip
-
 # 安装 requirements.txt 中的依赖
 pip install -r requirements.txt
 ```
