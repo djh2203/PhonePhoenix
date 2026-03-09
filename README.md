@@ -65,8 +65,6 @@ pkg update && pkg upgrade -y
 # 安装基础工具：git, python, pulseaudio (音频支持), termux-api (硬件访问), sox (音频处理)等
 pkg install git python pulseaudio termux-api sox python-pip portaudio clang binutils -y
 
-```markdown
-通过 SSH 远程管理（可选）
 ```
 
 如果你希望在电脑上远程管理，可以在 Termux 中安装并启动 SSH 服务：
@@ -99,18 +97,6 @@ cd PhonePhoenix
 pip install -r requirements.txt
 ```
 
-如果 `pyaudio` 安装失败，可以尝试使用 Termux 提供的预编译包：
-
-```bash
-pkg install python-pyaudio
-```
-
-或者先安装编译依赖再通过 pip 安装：
-
-```bash
-pkg install libportaudio clang
-pip install pyaudio
-```
 
 ### 4. 配置文件设置
 
