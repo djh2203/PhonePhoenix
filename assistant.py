@@ -85,9 +85,9 @@ def load_config():
             },
             "retries": 2,
             "paths": {
-                "audio_dir": "~/answers",
-                "manbo_audio": "~/manbo.mp3",
-                "zaijian_audio": "~/zaijian.mp3"
+                "audio_dir": "./answers",
+                "manbo_audio": "./manbo.mp3",
+                "zaijian_audio": "./zaijian.mp3"
             },
             "other": {
                 "chunk_size": 1024,
