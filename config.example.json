@@ -20,9 +20,9 @@
   },
   "retries": 2,
   "paths": {
-    "audio_dir": "/data/data/com.termux/files/home/answers",
-    "manbo_audio": "/data/data/com.termux/files/home/manbo.mp3",
-    "zaijian_audio": "/data/data/com.termux/files/home/zaijian.mp3"
+    "audio_dir": "./answers",
+    "manbo_audio": "./manbo.mp3",
+    "zaijian_audio": "./zaijian.mp3"
   },
   "other": {
     "chunk_size": 1024,
