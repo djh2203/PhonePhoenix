@@ -279,22 +279,6 @@ def random_play():
         print(f"[random_play] 异常: {e}")
         return jsonify({'success': False, 'error': str(e)}), 500
 
-# ------------------------------------------------------------
-# 路由：特殊音效
-# ------------------------------------------------------------
-
-@app.route('/c4')
-def start_c4():
-    """
-    播放 C4 炸弹音效（文件路径固定为 /sdcard/c4boom.mp3）。
-    Play C4 bomb sound effect (fixed path /sdcard/c4boom.mp3).
-    """
-    mp3_file = "/sdcard/c4boom.mp3"
-    try:
-        subprocess.Popen(['termux-media-player', 'play', mp3_file])
-        return "💣 C4已引爆！"
-    except Exception as e:
-        return f"播放失败：{e}"
 
 # ------------------------------------------------------------
 # 路由：语音助手控制
