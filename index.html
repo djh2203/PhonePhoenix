@@ -1,476 +1,546 @@
 <!DOCTYPE html>
-<html>
+    <html>
     <head>
         <title>手机点歌机</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- 主要美化与结构注释见下方 -->
         <style>
-            /* === 1. 主题变量&基础色 === */
             :root {
-                /* 渐变主色与毛玻璃 */
-                --gradient-main: linear-gradient(120deg, #97c1f7 0%, #baf2e7 100%);
-                --gradient-accent: linear-gradient(120deg, #a18cd1 0%, #fbc2eb 100%);
-                --frost-bg: rgba(255,255,255,0.6);
-                --frost-blur: blur(22px);
-
-                --primary-color: #507cff;
-                --primary-focus: #3a5efb;
-                --success-color: #36d0a0;
-                --danger-color: #fa5f65;
-                --warning-color: #ffd166;
-                --notice-color: #00b4d8;
-                --user-bubble: linear-gradient(120deg, #6a8dff 60%, #58ded2 100%);
-                --ai-bubble: rgba(255,255,255,0.82);
-
-                --foreground: #17223b;
-                --secondary: #5390d9;
-                --gray-bg: #f4f7fc;
-                --gray: #909199;
-                --shadow: 0 6px 24px 0 rgba(94,104,121,0.10);
-                --border-radius: 22px;
+                --primary-color: #ef9292;
+                --success-color: #2ec4b6;
+                --danger-color: #ff6b6b;
+                --light-color: #f8f9fa;
+                --dark-color: #212529;
+                --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+                --border-radius: 12px;
             }
-            html, body {
-                height: 100%;
-            }
-            body {
-                min-height: 100vh;
-                background: var(--gradient-main);
-                background-attachment: fixed;
-                color: var(--foreground);
-                font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-                display: flex;
-                flex-direction: column;
+
+            * {
+                box-sizing: border-box;
+                margin: 0;
                 padding: 0;
-            }
-            .container {
-                max-width: 490px;
-                margin: 0 auto;
-                padding: 22px 0 0 0;
-            }
-            @media (min-width: 481px) {
-                .container {
-                    max-width: 680px;
-                }
-            }
-            @media (min-width: 701px) {
-                .container {
-                    max-width: 960px;
-                }
+                font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
             }
 
-            /* === 2. 毛玻璃卡片和Header === */
-            header, .card {
-                width: 1000px;
-                background: var(--frost-bg);
-                backdrop-filter: var(--frost-blur);
-                -webkit-backdrop-filter: var(--frost-blur);
-                box-shadow: var(--shadow);
-                border-radius: var(--border-radius);
-                margin-bottom: 26px;
-                border: 1.5px solid rgba(180,192,221,0.15);
-                transition: box-shadow 0.27s cubic-bezier(.52,.11,.35,.94), transform 0.20s;
+            body {
+                background: linear-gradient(135deg, #3a72c5 0%, #52f2e0 100%);
+                min-height: 100vh;
+                padding: 20px;
+                color: var(--dark-color);
+                line-height: 1.6;
             }
-            .card {
-                padding: 28px 20px 22px 20px;
-                position: relative;
+
+            .container {
+                max-width: 900px;
+                margin: 0 auto;
             }
-            .card:hover,
-            .card:focus-within {
-                box-shadow: 0 16px 34px 0 rgba(88,166,255,0.11),0 4px 18px 0 rgba(143,143,143,0.07);
-                transform: translateY(-2px) scale(1.011);
-                z-index: 2;
-            }
+
             header {
                 text-align: center;
-                padding: 36px 20px 28px 20px;
-                margin-top: 20px;
+                margin-bottom: 30px;
+                padding: 25px 20px;
+                background: white;
+                border-radius: var(--border-radius);
+                box-shadow: var(--card-shadow);
             }
+
             h1 {
-                font-size: 2.15rem;
                 color: var(--primary-color);
+                font-size: 2.5rem;
                 margin-bottom: 10px;
-                letter-spacing: 2px;
-                font-weight: 800;
-                text-shadow: 0 2px 8px #d6f2ff51;
             }
+
             .subtitle {
-                color: var(--gray);
-                letter-spacing: .08em;
-                font-size: 1.08rem;
+                color: #666;
+                font-size: 1rem;
+                font-weight: normal;
             }
+
+            .card {
+                background: white;
+                border-radius: var(--border-radius);
+                padding: 25px;
+                margin-bottom: 25px;
+                box-shadow: var(--card-shadow);
+                transition: transform 0.2s ease;
+            }
+
+            .card:hover {
+                transform: translateY(-2px);
+            }
+
             h2 {
                 color: var(--primary-color);
-                font-size: 1.32rem;
-                font-weight: 700;
-                border-bottom: none;
-                background: linear-gradient(90deg,#5a7cff 55%,#5fd2ba 120%);
-                background-clip: text;
-                -webkit-background-clip: text;
-                color:transparent;
-                margin: 0 0 22px 0;
-                line-height: 1.2;
-                text-shadow: 0 5px 18px #cde9fd25;
+                border-bottom: 2px solid #eee;
+                padding-bottom: 10px;
+                margin-bottom: 20px;
+                font-size: 1.5rem;
             }
-            /* === 3. 按钮美化，卡片按钮组 === */
+
             .button-group {
                 display: flex;
-                gap: 15px;
                 flex-wrap: wrap;
-                margin-bottom: 14px;
+                gap: 12px;
+                margin-bottom: 15px;
             }
-            @media (max-width: 600px) {
-                .button-group {
-                    flex-direction: column;
-                    gap:8px;
-                }
-            }
-            button, .quick-btn {
+
+            button {
+                padding: 12px 20px;
                 border: none;
-                border-radius: 999px;
-                padding: 14px 22px;
-                font-size: 1rem;
-                font-weight: 600;
-                margin: 0;
+                border-radius: 8px;
                 cursor: pointer;
-                outline: none;
-                transition: background .13s, box-shadow .17s, transform .14s;
-                box-shadow: 0 1.5px 6px rgba(134,168,237,0.07);
-                position: relative;
-                overflow: hidden;
-                user-select: none;
-                background: var(--primary-color);
-                color: #fff;
+                font-weight: 600;
+                font-size: 0.95rem;
+                transition: all 0.2s ease;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                min-width: 120px;
             }
-            button:active, .quick-btn:active {
-                transform: scale(.99);
-            }
-            button.btn-primary,
-            .quick-btn {
-                background: var(--primary-color);
-                color: #fff;
-            }
-            button.btn-primary:hover,
-            .quick-btn:hover {
-                box-shadow: 0 3px 10px #507cff2a;
-                background: var(--primary-focus);
-            }
-            button.btn-success {
-                background: var(--success-color);
+
+            .btn-primary {
+                background-color: var(--primary-color);
                 color: white;
             }
-            button.btn-success:hover {
-                background: #1bc49e;
+
+            .btn-primary:hover {
+                background-color: #3a56d4;
+                box-shadow: 0 4px 8px rgba(67, 97, 238, 0.3);
             }
-            button.btn-danger {
-                background: var(--danger-color);
+
+            .btn-success {
+                background-color: var(--success-color);
+                color: white;
             }
-            button.btn-danger:hover {
-                background: #e94348;
+
+            .btn-success:hover {
+                background-color: #29b0a3;
             }
-            button.btn-warning {
-                background: var(--warning-color);
-                color: #684a00;
+
+            .btn-danger {
+                background-color: var(--danger-color);
+                color: white;
             }
-            button.btn-warning:hover {
-                background: #ffe298;
+
+            .btn-danger:hover {
+                background-color: #ff5252;
             }
-            /* 按钮波纹动画 */
-            button:after, .quick-btn:after {
-                content: "";
-                position: absolute;
-                border-radius: 50%;
-                pointer-events: none;
-                width: 10px;
-                height: 10px;
-                top: 50%; left: 50%;
-                background: rgba(255,255,255,0.20);
-                transform: translate(-50%,-50%) scale(1);
-                opacity: 0;
-                transition: opacity .3s, transform .3s;
+
+            .btn-warning {
+                background-color: #ff9e00;
+                color: white;
             }
-            button:active:after, .quick-btn:active:after {
-                width: 120%;
-                height: 350%;
-                opacity: .25;
-                background: rgba(255,255,255,0.30);
-                transition: 0s;
+
+            .btn-warning:hover {
+                background-color: #e68a00;
             }
-            /* === 4. 日志区域毛玻璃风格，日志动画 === */
-            #logArea {
-                background: var(--frost-bg);
-                backdrop-filter: var(--frost-blur);
-                -webkit-backdrop-filter: var(--frost-blur);
-                border-radius: 14px;
-                border: 1px solid #e1e5e9aa;
-                padding: 16px 13px;
-                min-height: 120px;
-                max-height: 220px;
-                font-family: 'Fira Mono',Consolas, Monaco,monospace;
-                font-size: 0.94rem;
-                overflow-y: auto;
-                margin-top: 12px;
-                box-shadow: 0 2px 15px 0 rgba(90,168,255,0.08);
-            }
-            .log-entry {
-                padding: 7px 0;
-                margin-bottom: 4px;
-                border-bottom: 1.5px dashed #edf1fa42;
-                animation: slideIn 0.33s ease;
-            }
-            .log-entry:last-child { border-bottom: none; }
-            .log-time { color: #aaa; font-size: 0.85em; margin-right: 8px;}
-            .log-user { color: var(--primary-color);}
-            .log-assistant { color: var(--success-color);}
-            .log-system { color: var(--warning-color);}
-            /* === 5. 聊天气泡样式与动画 === */
-            #chat-history {
-                background: var(--frost-bg);
-                backdrop-filter: var(--frost-blur);
-                -webkit-backdrop-filter: var(--frost-blur);
-                border-radius: 18px;
-                border: none;
-                padding: 20px 11px 12px 8px;
-                min-height: 130px;
-                margin-bottom: 18px;
-                max-height: 320px;
-            }
-            .chat-bubble-row {
-                display: flex;
-                align-items: flex-end;
-                margin-bottom: 8px;
-                animation: fadeIn 0.33s;
-            }
-            .bubble-user {
-                margin-left: auto;
-                max-width: 75%;
-                display: flex;
-                flex-direction: column;
-                align-items: flex-end;
-            }
-            .bubble-ai {
-                margin-right: auto;
-                max-width: 75%;
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            .bubble-user .chat-bubble {
-                background: var(--user-bubble);
-                color: #fff;
-                border-radius: 22px 22px 8px 22px;
-                box-shadow: 0 1.5px 6px rgba(90,112,228,0.13);
-            }
-            .bubble-ai .chat-bubble {
-                background: var(--ai-bubble);
-                color: var(--foreground);
-                border: 1px solid #e6ecff9f;
-                border-radius: 22px 22px 22px 9px;
-                box-shadow: 0 1.5px 6px rgba(90,132,178,0.09);
-            }
-            .chat-bubble {
-                padding: 11px 18px;
-                font-size: 1.05em;
-                line-height: 1.65;
-                margin-bottom: 4px;
-            }
-            .bubble-tag {
-                font-size: 12px;
-                color: #97a1b9;
-                margin-bottom: 2.5px;
-                margin-left: 6px;
-                margin-right: 6px;
-            }
-            /* 聊天输入和发送 */
-            .chat-input-row {
-                display: flex;
-                gap: 10px;
-                margin-bottom: 6px;
-            }
-            #chat-input {
-                flex: 1;
-                padding: 13px 15px;
-                border: 2.2px solid #dce4fc;
-                border-radius: 14px;
-                font-size: 1rem;
-                background: #f8faffcc;
-                transition: border-color 0.19s, box-shadow 0.13s;
-            }
-            #chat-input:focus {
-                outline: none;
-                border-color: var(--primary-color);
-                background: rgba(244,246,255,.98);
-                box-shadow: 0 2px 12px #507cff13;
-            }
-            #send-button {
-                padding: 13px 25px;
-                font-size: 1em;
-                border-radius: 14px;
-            }
-            /* 快捷提问 */
-            .quick-btns-container {
-                margin-top: 10px;
-            }
-            .quick-btn {
-                background: #ecf4ff;
-                color: var(--primary-color);
-                border: 1.2px solid #b0c9ff;
-                box-shadow: none;
-                border-radius: 22px;
-                font-size: 14px;
-                padding: 6px 16px;
-                margin: 1.5px 6px 1.5px 0;
-                cursor: pointer;
-                transition: background 0.15s;
-            }
-            .quick-btn:hover {
-                background: #e3ecfb;
-                color: #3157b2;
-            }
-            /* === 6. 歌曲区、音乐播放卡片 === */
+
             #now-playing {
-                font-size: 1.12rem;
+                font-size: 1.3rem;
                 font-weight: bold;
                 color: var(--success-color);
-                background: #eafffc99;
                 padding: 15px;
-                border-radius: 14px;
-                border-left: 5.5px solid var(--success-color);
-                margin: 12px 0 0 0;
-                box-shadow: 0 4px 18px #a1ffe124;
+                border-radius: 10px;
+                margin: 15px 0;
                 text-align: center;
-                backdrop-filter: blur(5px);
+                background: rgba(240, 255, 253, 0.6) !important;
+                border-left: 5px solid var(--success-color); /* 保留左侧强调色 */
             }
-            /* 歌曲列表美化 */
+
+            #logArea {
+                border-radius: 10px;
+                padding: 15px;
+                height: 200px;
+                overflow-y: auto;
+                font-family: 'Consolas', 'Monaco', monospace;
+                font-size: 0.9rem;
+                line-height: 1.4;
+                margin-top: 10px;
+                background: rgba(255, 255, 255, 0.3) !important;
+                border: 1px solid rgba(255, 255, 255, 0.3) !important;    
+            }
+
+            .log-entry {
+                margin-bottom: 8px;
+                padding-bottom: 8px;
+                border-bottom: 1px dashed #eee;
+            }
+
+            .log-time {
+                color: #888;
+                font-size: 0.8rem;
+            }
+
+            .log-user {
+                color: #4361ee;
+                font-weight: bold;
+            }
+
+            .log-assistant {
+                color: #2ec4b6;
+                font-weight: bold;
+            }
+
+            .log-system {
+                color: #ff9e00;
+                font-weight: bold;
+            }
+
+            .upload-section {
+                border-radius: 10px;
+                padding: 20px;
+                text-align: center;
+                margin: 20px 0;
+                background: transparent !important;
+                border: 2px dashed rgba(255, 255, 255, 1) !important;
+            }
+
+            .upload-section input[type="file"] {
+                padding: 10px;
+                border-radius: 20px;
+                width: 100%;
+                max-width: 400px;
+                margin-bottom: 15px;
+                background: rgba(159, 213, 242, 0.984);
+                border: 5px solid rgba(255, 255, 255, 0.2);
+                color: #333;
+            }
+
+            #uploadMessage {
+                margin-top: 10px;
+                padding: 10px;
+                border-radius: 8px;
+                font-weight: bold;
+                text-align: center;
+            }
+
+            .success-message {
+                background-color: #d4edda;
+                color: #155724;
+                border: 1px solid #c3e6cb;
+            }
+
+            .error-message {
+                background-color: #f8d7da;
+                color: #721c24;
+                border: 1px solid #f5c6cb;
+            }
+
             #playlist {
                 list-style: none;
                 padding: 0;
                 margin-top: 15px;
             }
+
             #playlist li {
                 display: flex;
-                align-items: center;
                 justify-content: space-between;
-                padding: 13px 8px 13px 18px;
-                margin-bottom: 11px;
-                background: var(--frost-bg);
-                backdrop-filter: var(--frost-blur);
-                box-shadow: 0 2px 10px 0 rgba(94,104,121,0.04);
-                border-radius: 18px;
-                border-left: 5.5px solid var(--primary-color);
-                transition: background 0.18s, box-shadow 0.12s;
-                gap: 12px;
+                align-items: center;
+                padding: 15px;
+                margin-bottom: 12px;
+                border-radius: 10px;
+                border-left: 4px solid var(--primary-color);
+                transition: background 0.2s;
+                background: rgba(255, 255, 255, 0.3) !important;
+                backdrop-filter: blur(5px);
+                border: 1px solid rgba(255, 255, 255, 0.2);
             }
+
             #playlist li:hover {
-                background: #ecf2fae0;
-                box-shadow: 0 5px 18px #97c1f733;
+                background: #e9ecef;
             }
+
             .song-name {
                 font-weight: 500;
-                color: #284970;
-                font-size: 1em;
-                letter-spacing: .01em;
+                color: #333;
                 flex-grow: 1;
                 word-break: break-word;
-                margin-right: 8px;
             }
-            /* == 7. 上传区 == */
-            .upload-section {
-                background: var(--frost-bg);
-                backdrop-filter: var(--frost-blur);
-                border: 2px dashed #bdd3ff;
-                border-radius: 16px;
-                padding: 24px 12px;
-                text-align: center;
-                margin: 8px 0 0 0;
-                box-shadow: 0 4px 18px #baf2e713;
-            }
-            .upload-section input[type="file"] {
-                padding: 8px;
-                border: 1px solid #aac6f2;
-                border-radius: 10px;
-                background: #ffffff;
-                margin-bottom: 13px;
-                width: 98%;
-                max-width: 320px;
-            }
-            #uploadMessage {
-                margin-top: 12px;
-                padding: 10px;
-                border-radius: 10px;
-                text-align: center;
-                font-weight: 600;
-            }
-            .success-message {
-                background: #c6ffe3e0;
-                color: #097c46;
-                border: 1px solid #2edcae82;
-                box-shadow: 0 4px 12px #2edaad1f;
-            }
-            .error-message {
-                background: rgba(255,136,136,0.17);
-                color: #ba2224;
-                border: 1.2px solid #ffb2b26c;
-                box-shadow: 0 4px 12px #ff9f9f17;
-            }
-            /* === 8. 摄像头结果美化（与快照保持原有grid）=== */
-            #camera-result > div {
-                animation: fadeIn 0.38s;
-            }
-            /* === 9. 照片和附加动画保留原样式，可复用上方公共色变�� === */
 
-            /* === 10. 动画与过渡 === */
+            footer {
+                text-align: center;
+                margin-top: 30px;
+                color: #777;
+                font-size: 0.9rem;
+                padding: 15px;
+            }
+
+            @media (max-width: 768px) {
+                .container {
+                    padding: 10px;
+                }
+
+                h1 {
+                    font-size: 2rem;
+                }
+
+                .button-group {
+                    flex-direction: column;
+                }
+
+                button {
+                    width: 100%;
+                }
+            }
+            
+            /* 优化后的照片容器样式 */
+            #snapshot-list {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 15px;
+                min-height: 150px;
+                border: 2px dashed #ddd;
+                border-radius: 10px;
+                padding: 15px;
+                background: #f9f9f9;
+                justify-items: center;
+            }
+            
+            /* 优化后的照片项 */
+            .snapshot-item {
+                position: relative;
+                cursor: pointer;
+                width: 100%;
+                max-width: 150px;
+                background: white;
+                border-radius: 8px;
+                overflow: hidden;
+                box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+                transition: transform 0.2s, box-shadow 0.2s;
+            }
+            
+            .snapshot-item:hover {
+                transform: scale(1.05);
+                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            }
+            
+            /* 优化后的照片预览容器 - 使用固定比例 */
+            .snapshot-preview {
+                position: relative;
+                width: 100%;
+                padding-top: 75%; /* 4:3 比例 */
+                overflow: hidden;
+                background: #f0f0f0;
+            }
+            
+            .snapshot-preview img {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: contain; /* 改为contain，完整显示图片 */
+            }
+            
+            /* 优化后的删除按钮 - 更小更紧凑 */
+            .delete-btn {
+                position: absolute;
+                bottom: 40px;
+                right: 5px;
+                z-index: 10;
+                background: rgba(255, 0, 0, 0.7);
+                color: white;
+                border: none;
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                font-size: 12px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: background 0.2s, transform 0.2s;
+                line-height: 1;
+                padding: 0;
+            }
+            
+            .delete-btn:hover {
+                background: rgba(255, 0, 0, 0.9);
+                transform: scale(1.1);
+            }
+            
+            /* 照片信息 */
+            .snapshot-info {
+                padding: 8px;
+                text-align: left;
+            }
+            
+            .snapshot-time {
+                font-size: 11px;
+                color: #333;
+                font-weight: bold;
+                margin-bottom: 2px;
+            }
+            
+            .snapshot-size {
+                font-size: 10px;
+                color: #666;
+            }
+            
+            /* 通知动画 */
             @keyframes slideIn {
-                from { transform: translateY(26px); opacity: 0;}
-                to { transform: translateY(0); opacity: 1;}
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
             }
-            @keyframes fadeIn {
-                from { opacity: 0; transform: translateY(13px);}
-                to   { opacity: 1; transform: none;}
+            
+            @keyframes slideOut {
+                from {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
             }
-            /* Spinner 保留 */
+            
+            /* 加载动画 */
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+            
             .spinner {
-                width: 20px; height: 20px;
+                display: inline-block;
+                width: 20px;
+                height: 20px;
                 border: 3px solid #f3f3f3;
-                border-top: 3px solid #6a9be8;
+                border-top: 3px solid #3498db;
                 border-radius: 50%;
                 animation: spin 1s linear infinite;
             }
-            @keyframes spin {
-                0% { transform: rotate(0deg);}
-                100% { transform: rotate(360deg);}
-            }
-            /* === 响应式微调 === */
-            @media (max-width: 768px) {
-                .container {
-                    padding: 8px;
+            /* 聊天消息动画 */
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(10px);
                 }
-                h1 {
-                    font-size: 1.5rem;
-                }
-                .card {
-                    padding: 14px 6px 11px 7px;
-                }
-                #now-playing {
-                    font-size: 1rem;
-                }
-                #playlist li, .song-name {
-                    font-size: .97em;
-                    padding-left: 6px;
-                    padding-right:2px;
-                }
-            }
-            @media (max-width: 480px) {
-                header {
-                    padding: 17px 4vw 18px 4vw;
-                }
-                .card {
-                    margin-bottom: 14px;
-                    padding: 12px 3px 11px 3px;
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
                 }
             }
 
-            /* 保持照片容器/项目/删除按钮等原有风格，复用色即可（与原CSS兼容） */
+            /* 消息样式 */
+            .message-container {
+                animation: fadeIn 0.3s ease-out;
+            }
+
+            .user-message {
+                animation: fadeIn 0.3s ease-out 0.1s backwards;
+            }
+
+            .assistant-message {
+                animation: fadeIn 0.3s ease-out 0.2s backwards;
+            }
+                        /* 毛玻璃效果通用类（也可直接作用于元素） */
+            header, .card, .upload-section, footer {
+            background: rgba(255, 255, 255, 0.2) !important;          /* 半透明白色基底 */
+            backdrop-filter: blur(10px) !important;                  /* 背景模糊 */
+            -webkit-backdrop-filter: blur(10px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.3) !important;   /* 半透明边框增加质感 */
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;    /* 柔和阴影 */
+            color: #212529; /* 确保文字颜色不变 */
+            }
+            h1, h2, .subtitle, p {
+                text-shadow: 1px 1px 20px rgb(255, 255, 255);
+            }
+        /* ===== 美化聊天历史滚动条 ===== */
+        #chat-history {
+        /* Firefox 滚动条样式 */
+        scrollbar-width: thin;
+        scrollbar-color: #4361ee rgba(255, 255, 255, 0.3);
+        }
+
+        /* WebKit 内核浏览器滚动条样式 */
+        #chat-history::-webkit-scrollbar {
+        width: 6px;               /* 垂直滚动条宽度 */
+        height: 6px;              /* 水平滚动条高度（若存在） */
+        }
+
+        #chat-history::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 10px;
+        margin: 4px 0;            /* 上下留边距，避免贴边 */
+        }
+
+        #chat-history::-webkit-scrollbar-thumb {
+        background: #4361ee;      /* 主题色滑块 */
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.2); /* 轻微内边框增加立体感 */
+        }
+
+        #chat-history::-webkit-scrollbar-thumb:hover {
+        background: #3a56d4;      /* 悬停加深 */
+        }
+
+        #chat-history::-webkit-scrollbar-corner {
+        background: transparent;  /* 角落透明 */
+        }
+        /* ===== 毛玻璃效果（用户提供样式） ===== */
+header, .card, .upload-section, footer {
+  background-color: rgba(89, 89, 89, 0.1) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  border: 0.666667px solid rgba(255, 255, 255, 0.18) !important;
+  box-shadow: rgba(14, 14, 14, 0.19) 0px 6px 15px 0px !important;
+  -webkit-box-shadow: rgba(14, 14, 14, 0.19) 0px 6px 15px 0px !important;
+  border-radius: 14px !important;
+  -webkit-border-radius: 14px !important;
+  /* 不改变文字颜色，保持原有可读性 */
+  color: inherit;
+}
+
+/* 内部元素背景半透明调整 */
+#logArea {
+  background: rgba(255, 255, 255, 0.7) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 10px;
+}
+
+#now-playing {
+  background: rgba(240, 255, 253, 0.6) !important;
+  border-left: 5px solid var(--success-color);
+  border-radius: 10px;
+}
+
+#chat-history {
+  background: rgba(255, 255, 255, 0.5) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 10px;
+}
+
+.upload-section input[type="file"] {
+  background: rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: #333;
+}
+
+/* 可选：如果希望标题更突出，添加轻微文字阴影 */
+h1, h2, .subtitle {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+body {
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    min-height: 100vh;
+    padding: 20px;
+    color: var(--dark-color); /* 保留原有文字颜色，或根据需要修改 */
+}
+
+@keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
         </style>
     </head>
     <body>
@@ -479,38 +549,117 @@
                 <h1>手机点歌机</h1>
                 <p class="subtitle">语音控制 · 在线点播 · 轻松上传</p>
             </header>
+
             <div class="card">
                 <h2>🎤 语音助手控制</h2>
                 <div class="button-group">
                     <button class="btn-primary" onclick="startAssistant()">启动语音助手</button>
                     <button class="btn-danger" onclick="stopAssistant()">停止助手</button>
+                    <button class="btn-warning" onclick="fetch('/c4')">安放C4</button>
                 </div>
-                <h3 style="font-size: 1em; margin: 22px 0 7px 0;color:var(--secondary); font-weight: 700;letter-spacing: .04em;">助手日志</h3>
-                <div id="logArea">暂无日志</div>
-            </div>
 
-            <!-- ==== AI对话气泡样式 === -->
+                <h3>助手日志</h3>
+                <div id="logArea">
+                    暂无日志
+                </div>
+            </div>
             <div class="card">
                 <h2>💬 AI 文字对话</h2>
-                <div id="chat-history">
-                    <div class="chat-bubble-row" style="justify-content: center;">
-                        <span style="color: #aaa; font-size: 1em;">暂无对话记录，在下方输入框开始聊天...</span>
+                
+                <!-- 聊天历史记录 -->
+                <div id="chat-history" style="
+                    height: 300px;
+                    overflow-y: auto;
+                    border-radius: 10px;
+                    padding: 15px;
+                    margin-bottom: 15px;
+                    font-family: 'Segoe UI', Arial, sans-serif;
+                    background: rgba(255, 255, 255, 0.3) !important;
+                    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+                ">
+                    <div class="message-container" style="text-align: center; color: #999; padding: 20px;">
+                        暂无对话记录，在下方输入框开始聊天...
                     </div>
                 </div>
-                <div class="chat-input-row">
-                    <input type="text"
-                        id="chat-input"
-                        placeholder="输入您的问题..."
+                
+                <!-- 输入区域 -->
+                <div style="display: flex; gap: 10px;">
+                    <input type="text" 
+                        id="chat-input" 
+                        placeholder="输入您的问题..." 
+                        style="
+                                flex: 1;
+                                padding: 12px 15px;
+                                border: 2px solid #e1e5e9;
+                                border-radius: 8px;
+                                font-size: 16px;
+                                transition: border-color 0.2s;
+                        "
                         onkeypress="if(event.key === 'Enter') sendMessage()"
-                    >
-                    <button id="send-button" class="btn-primary" onclick="sendMessage()">发送</button>
+                        onfocus="this.style.borderColor='#4361ee'"
+                        onblur="this.style.borderColor='#e1e5e9'">
+                    
+                    <button id="send-button" 
+                            onclick="sendMessage()" 
+                            style="
+                                padding: 12px 25px;
+                                background: #4361ee;
+                                color: white;
+                                border: none;
+                                border-radius: 8px;
+                                font-weight: 600;
+                                cursor: pointer;
+                                transition: background 0.2s;
+                            "
+                            onmouseover="this.style.backgroundColor='#3a56d4'"
+                            onmouseout="this.style.backgroundColor='#4361ee'"
+                            onmousedown="this.style.backgroundColor='#2e4bcc'"
+                            onmouseup="this.style.backgroundColor='#3a56d4'">
+                        发送
+                    </button>
                 </div>
-                <div class="quick-btns-container">
-                    <span style="font-size: 13px;color:#777; margin-right:10px;">快捷提问:</span>
-                    <button class="quick-btn" type="button" onclick="setQuickQuestion(this.innerText)">打招呼</button>
-                    <button class="quick-btn" type="button" onclick="setQuickQuestion(this.innerText)">随机播放一首歌</button>
-                    <button class="quick-btn" type="button" onclick="setQuickQuestion(this.innerText)">开大</button>
-                    <button class="quick-btn" type="button" onclick="setQuickQuestion(this.innerText)">展示才艺</button>
+                
+                <!-- 常用快捷问题 -->
+                <div style="margin-top: 15px;">
+                    <div style="font-size: 14px; color: #666; margin-bottom: 8px;">快捷提问:</div>
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                        <button onclick="setQuickQuestion(this.innerText)" style="
+                            padding: 6px 12px;
+                            background: #f0f5ff;
+                            color: #4361ee;
+                            border: 1px solid #c3d0ff;
+                            border-radius: 20px;
+                            font-size: 13px;
+                            cursor: pointer;
+                        ">打招呼</button>
+                        <button onclick="setQuickQuestion(this.innerText)" style="
+                            padding: 6px 12px;
+                            background: #f0f5ff;
+                            color: #4361ee;
+                            border: 1px solid #c3d0ff;
+                            border-radius: 20px;
+                            font-size: 13px;
+                            cursor: pointer;
+                        ">随机播放一首歌</button>
+                        <button onclick="setQuickQuestion(this.innerText)" style="
+                            padding: 6px 12px;
+                            background: #f0f5ff;
+                            color: #4361ee;
+                            border: 1px solid #c3d0ff;
+                            border-radius: 20px;
+                            font-size: 13px;
+                            cursor: pointer;
+                        ">开大</button>
+                        <button onclick="setQuickQuestion(this.innerText)" style="
+                            padding: 6px 12px;
+                            background: #f0f5ff;
+                            color: #4361ee;
+                            border: 1px solid #c3d0ff;
+                            border-radius: 20px;
+                            font-size: 13px;
+                            cursor: pointer;
+                        ">展示才艺</button>
+                    </div>
                 </div>
             </div>
 
@@ -539,29 +688,34 @@
                     {% for file in files %}
                     <li>
                         <span class="song-name">{{ file }}</span>
-                        <button class="btn-primary" onclick="playMusic('{{ file }}')">▶️ 播放</button>
+                        <button class="btn-primary" onclick="playMusic('{{ file }}')">播放</button>
                     </li>
                     {% endfor %}
                 </ul>
             </div>
-
+            
             <div class="card">
                 <h2>📷 摄像头拍照</h2>
                 <div id="camera-status" class="status">摄像头状态: 就绪</div>
+                
                 <div class="button-group">
                     <button class="btn-primary" onclick="takePhoto(1)">前置摄像头拍照</button>
                     <button class="btn-primary" onclick="takePhoto(0)">后置主摄拍照</button>
                     <button class="btn-warning" onclick="clearPhotos()">清空预览</button>
                 </div>
-                <div id="camera-result" style="margin-top: 20px; text-align: center;"></div>
-                <!-- 原快照区域略：如有缩略图show在camera-result内 -->
+                
+                <div id="camera-result" style="margin-top: 20px; text-align: center;">
+                    <!-- 拍照结果会显示在这里 -->
+                </div>
+                
             </div>
-            <footer style="margin-bottom: max(8px, env(safe-area-inset-bottom));">
-                <p>手机点歌机系统 | 基于HTML5 & JavaScript构建</p>
+            
+            <footer>
+                <p>基于HTML5 & JavaScript构建&nbsp;&nbsp;|&nbsp;&nbsp;©2026 DJH</p>
             </footer>
         </div>
+
         <script>
-            // ---- JS代码与原页面一致，仅微调聊天模块DOM构建方式 ----
             // 音乐播放控制函数
             function playMusic(filename) {
                 fetch('/play/' + encodeURIComponent(filename))
@@ -570,6 +724,7 @@
                         document.getElementById('now-playing').innerText = '正在播放：' + data.song;
                     });
             }
+            
             function stopMusic() {
                 fetch('/stop')
                     .then(response => response.json())
@@ -577,6 +732,7 @@
                         document.getElementById('now-playing').innerText = '已停止';
                     });
             }
+            
             setInterval(() => {
                 fetch('/status')
                     .then(res => res.json())
@@ -588,6 +744,7 @@
                         }
                     });
             }, 2000);
+            
             // 文件上传功能
             function uploadFile() {
                 const formData = new FormData(document.getElementById('uploadForm'));
@@ -613,6 +770,7 @@
                     uploadMessage.className = 'error-message';
                 });
             }
+            
             function loadPlaylist() {
                 fetch('/list')
                     .then(res => res.json())
@@ -626,6 +784,7 @@
                         });
                     });
             }
+            
             // 语音助手控制
             function startAssistant() {
                 fetch('/start_assistant')
@@ -641,6 +800,7 @@
                 })
                 .catch(err => alert('网络错误'));
             }
+            
             function stopAssistant() {
                 fetch('/stop_assistant')
                     .then(res => res.json())
@@ -653,6 +813,7 @@
                     })
                     .catch(err => alert('网络错误'));
             }
+            
             // 日志功能
             function fetchLogs() {
                 fetch('/get_assistant_logs')
@@ -665,11 +826,21 @@
                         }
                         let html = '';
                         logs.forEach(log => {
-                            let prefix = '', prefixClass = '';
-                            if (log.type === 'user') { prefix = '👤 你说'; prefixClass = 'log-user'; }
-                            else if (log.type === 'assistant') { prefix = '🤖 助手'; prefixClass = 'log-assistant'; }
-                            else if (log.type === 'unknown') { prefix = '👂 尝试唤醒'; prefixClass = 'log-system'; }
-                            else { prefix = '⚙️ 系统'; prefixClass = 'log-system'; }
+                            let prefix = '';
+                            let prefixClass = '';
+                            if (log.type === 'user') {
+                                prefix = '👤 你说';
+                                prefixClass = 'log-user';
+                            } else if (log.type === 'assistant') {
+                                prefix = '🤖 助手';
+                                prefixClass = 'log-assistant';
+                            } else if (log.type === 'unknown') {
+                                prefix = '👂 尝试唤醒';
+                                prefixClass = 'log-system';
+                            } else {
+                                prefix = '⚙️ 系统';
+                                prefixClass = 'log-system';
+                            }
                             html += `<div class="log-entry"><span class="log-time">[${log.time}]</span> <span class="${prefixClass}">${prefix}:</span> ${log.text}</div>`;
                         });
                         logArea.innerHTML = html;
@@ -677,30 +848,49 @@
                     })
                     .catch(err => console.log('获取日志失败', err));
             }
+            
             setInterval(fetchLogs, 2000);
             fetchLogs();
+            
             // 摄像头控制函数
             function takePhoto(cameraId) {
-                const cameraNames = {0: '后置主摄', 1: '前置摄像头'};
+                const cameraNames = {
+                    0: '后置主摄',
+                    1: '前置摄像头'
+                };
+                
                 const cameraName = cameraNames[cameraId] || `摄像头 ${cameraId}`;
                 const resultDiv = document.getElementById('camera-result');
+                
+                // 显示加载状态
                 resultDiv.innerHTML = `
                     <div style="color: #ff9800;">
                         <div class="spinner"></div>
                         正在拍照，请稍候...
                     </div>
                 `;
+                
+                // 发送拍照请求
                 fetch(`/camera/snapshot/${cameraId}`)
                     .then(response => response.json())
                     .then(data => {
                         if (data.success) {
+                            // 显示拍照结果
                             resultDiv.innerHTML = `
                                 <div style="color: #4CAF50; font-weight: bold; margin-bottom: 10px;">
                                     ✅ 拍照成功！
                                 </div>
                                 <div style="margin: 15px 0;">
-                                    <img src="data:image/jpeg;base64,${data.image_base64}" alt="${data.filename}"
-                                        style="max-width: 100%; max-height: 300px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); display: block; margin: 0 auto;">
+                                    <img src="data:image/jpeg;base64,${data.image_base64}" 
+                                        alt="${data.filename}"
+                                        style="
+                                            max-width: 100%;
+                                            max-height: 300px;
+                                            border-radius: 10px;
+                                            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+                                            display: block;
+                                            margin: 0 auto;
+                                        ">
                                 </div>
                                 <div style="margin-top: 10px; font-size: 14px; color: #666; text-align: left; background: #f5f5f5; padding: 10px; border-radius: 5px;">
                                     <div><strong>文件:</strong> ${data.filename}</div>
@@ -708,52 +898,171 @@
                                     <div><strong>时间:</strong> ${new Date().toLocaleTimeString()}</div>
                                 </div>
                             `;
+                            
+                            // 添加到日志
                             addToLog(`📸 拍摄照片: ${data.filename} (${cameraName})`, 'system');
                         } else {
-                            resultDiv.innerHTML = `<div style="color: #f44336; font-weight: bold;">❌ 拍照失败: ${data.error}</div>`;
+                            resultDiv.innerHTML = `
+                                <div style="color: #f44336; font-weight: bold;">
+                                    ❌ 拍照失败: ${data.error}
+                                </div>
+                            `;
                         }
                     })
                     .catch(err => {
-                        resultDiv.innerHTML = `<div style="color: #f44336; font-weight: bold;">❌ 网络错误: ${err.message}</div>`;
+                        console.error('拍照请求失败:', err);
+                        resultDiv.innerHTML = `
+                            <div style="color: #f44336; font-weight: bold;">
+                                ❌ 网络错误: ${err.message}
+                            </div>
+                        `;
                     });
             }
+            
+            // 加载最近照片
+            
+            
+            // 清空预览
             function clearPhotos() {
                 document.getElementById('camera-result').innerHTML = '';
                 document.getElementById('camera-status').innerText = '摄像头状态: 就绪';
                 document.getElementById('camera-status').style.color = '#666';
             }
-            function showFullScreenImage(imageSrc, filename) {/* ...保留原代码无需更改... */}
+            
+            // 全屏查看图片
+            function showFullScreenImage(imageSrc, filename) {
+                const viewer = document.createElement('div');
+                viewer.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0,0,0,0.95);
+                    z-index: 9999;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    padding: 20px;
+                `;
+                
+                viewer.innerHTML = `
+                    <div style="
+                        position: relative;
+                        width: 100%;
+                        height: 100%;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                    ">
+                        <img src="${imageSrc}" 
+                            alt="${filename}" 
+                            style="
+                                max-width: 100%;
+                                max-height: 80vh;
+                                object-fit: contain;
+                                border-radius: 5px;
+                            ">
+                        
+                        <div style="
+                            position: absolute;
+                            top: 20px;
+                            right: 20px;
+                        ">
+                            <button onclick="this.parentElement.parentElement.parentElement.remove()" 
+                                    style="
+                                        background: rgba(0,0,0,0.7);
+                                        color: white;
+                                        border: none;
+                                        width: 40px;
+                                        height: 40px;
+                                        border-radius: 50%;
+                                        font-size: 20px;
+                                        cursor: pointer;
+                                    ">✕</button>
+                        </div>
+                        
+                        <div style="
+                            position: absolute;
+                            bottom: 20px;
+                            left: 50%;
+                            transform: translateX(-50%);
+                            color: white;
+                            background: rgba(0,0,0,0.7);
+                            padding: 10px 20px;
+                            border-radius: 5px;
+                            text-align: center;
+                            max-width: 90%;
+                            word-break: break-all;
+                        ">
+                            ${filename}<br>
+                            <small style="opacity: 0.8;">点击任意位置关闭</small>
+                        </div>
+                    </div>
+                `;
+                
+                document.body.appendChild(viewiewer);
+                
+                viewer.onclick = function(e) {
+                    if (e.target === this) {
+                        document.body.removeChild(this);
+                    }
+                };
+            }
+            
+            // 日志辅助函数
             function addToLog(message, type) {
                 const logEntry = {
                     time: new Date().toLocaleTimeString(),
                     type: type,
                     text: message
                 };
+                
                 fetch('/log_assistant', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(logEntry)
                 }).catch(console.error);
             }
+            
+            // 页面加载时加载最近照片
+            document.addEventListener('DOMContentLoaded', function() {
+            });
+            // 聊天相关功能
             let chatHistory = [];
-            // == [重构] 聊天UI气泡填充 == //
+
             function sendMessage() {
                 const input = document.getElementById('chat-input');
                 const button = document.getElementById('send-button');
                 const message = input.value.trim();
-                if (!message) return;
+                
+                if (!message) {
+                    return;
+                }
+                
+                // 添加用户消息到界面
                 addMessageToUI('user', message);
                 input.value = '';
+                
+                // 禁用发送按钮，显示加载状态
                 button.disabled = true;
                 button.innerHTML = '<span style="font-size: 14px;">发送中...</span>';
+                
+                // 发送到后端
                 fetch('/api/chat', {
-                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
                     body: JSON.stringify({ message: message })
                 })
                 .then(response => response.json())
                 .then(data => {
                     button.disabled = false;
                     button.innerHTML = '发送';
+                    
                     if (data.success) {
                         if (data.interrupted) {
                             addMessageToUI('assistant', '⏸️ 对话已被打断');
@@ -765,42 +1074,84 @@
                     }
                 })
                 .catch(error => {
+                    console.error('发送消息失败:', error);
                     button.disabled = false;
                     button.innerHTML = '发送';
                     addMessageToUI('assistant', '❌ 网络错误，请稍后重试');
                 });
             }
-            // 聊天气泡填充
+
             function addMessageToUI(sender, text) {
                 const chatHistoryDiv = document.getElementById('chat-history');
-                if (chatHistoryDiv.querySelector('.chat-bubble-row') &&
-                    chatHistoryDiv.querySelector('.chat-bubble-row').innerText.includes('暂无对话记录')) {
+                
+                // 如果当前显示的是"暂无对话记录"，先清除
+                if (chatHistoryDiv.querySelector('.message-container') && 
+                    chatHistoryDiv.querySelector('.message-container').innerText.includes('暂无对话记录')) {
                     chatHistoryDiv.innerHTML = '';
                 }
-                // 加动画分组
-                const row = document.createElement('div');
-                row.className = 'chat-bubble-row ' + (sender === 'user' ? 'bubble-user' : 'bubble-ai');
-                // tag
-                if(sender === 'assistant') {
-                    const tag = document.createElement('div');
-                    tag.className = 'bubble-tag';
-                    tag.innerText = '🤖 AI助手';
-                    row.appendChild(tag);
+                
+                // 创建消息元素
+                const messageDiv = document.createElement('div');
+                messageDiv.style.marginBottom = '15px';
+                
+                if (sender === 'user') {
+                    messageDiv.innerHTML = `
+                        <div style="
+                            display: flex;
+                            justify-content: flex-end;
+                            margin-bottom: 5px;
+                        ">
+                            <div style="
+                                background: #4361ee;
+                                color: white;
+                                padding: 10px 15px;
+                                border-radius: 15px 15px 5px 15px;
+                                max-width: 80%;
+                                word-wrap: break-word;
+                            ">
+                                ${text}
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    messageDiv.innerHTML = `
+                        <div style="margin-bottom: 5px;">
+                            <div style="font-size: 12px; color: #666; margin-left: 5px;">
+                                🤖 AI助手
+                            </div>
+                            <div style="
+                                background: white;
+                                color: #333;
+                                padding: 10px 15px;
+                                border-radius: 15px 15px 15px 5px;
+                                border: 1px solid #e1e5e9;
+                                max-width: 80%;
+                                word-wrap: break-word;
+                            ">
+                                ${text}
+                            </div>
+                        </div>
+                    `;
                 }
-                const bubble = document.createElement('div');
-                bubble.className = 'chat-bubble';
-                bubble.innerText = text;
-                row.appendChild(bubble);
-                chatHistoryDiv.appendChild(row);
-                // 保存历史
+                
+                chatHistoryDiv.appendChild(messageDiv);
+                
+                // 保存到历史记录
                 chatHistory.push({
                     sender: sender,
                     text: text,
                     time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
                 });
+                
+                // 滚动到底部
                 chatHistoryDiv.scrollTop = chatHistoryDiv.scrollHeight;
-                if (chatHistory.length > 50) chatHistory.shift();
+                
+                // 限制历史记录数量
+                if (chatHistory.length > 50) {
+                    chatHistory.shift();
+                }
             }
+
             function setQuickQuestion(question) {
                 document.getElementById('chat-input').value = question;
                 document.getElementById('chat-input').focus();
