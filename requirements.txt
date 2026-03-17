@@ -4,4 +4,3 @@ baidu-aip
 PyAudio
 requests
 chardet
-# pillow  # 可选，如果需要处理图片可以取消注释
