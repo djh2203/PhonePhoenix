@@ -296,7 +296,7 @@ def start_assistant():
 
     stop_playing()  # 避免音频冲突
 
-    assistant_path = os.path.expanduser('~/assistant.py')
+    assistant_path = os.path.expanduser('./assistant.py')
     if not os.path.exists(assistant_path):
         return jsonify({'error': '助手文件不存在'}), 404
 
