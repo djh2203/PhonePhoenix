@@ -1,882 +1,1081 @@
-<!DOCTYPE html>
-    <html>
-    <head>
-        <title>手机点歌机</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <style>
-            :root {
-                --primary-color: #ef9292;
-                --success-color: #2ec4b6;
-                --danger-color: #ff6b6b;
-                --light-color: #f8f9fa;
-                --dark-color: #212529;
-                --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-                --border-radius: 12px;
-            }
+<!doctype html>
+<html>
+  <head>
+    <title>手机点歌机</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      :root {
+        --primary-color: #ef9292;
+        --success-color: #2ec4b6;
+        --danger-color: #ff6b6b;
+        --light-color: #f8f9fa;
+        --dark-color: #212529;
+        --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        --border-radius: 12px;
+      }
 
-            * {
-                box-sizing: border-box;
-                margin: 0;
-                padding: 0;
-                font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-            }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      }
 
-            body {
-                background: linear-gradient(135deg, #3a72c5 0%, #52f2e0 100%);
-                min-height: 100vh;
-                padding: 20px;
-                color: var(--dark-color);
-                line-height: 1.6;
-            }
+      body {
+        background: linear-gradient(135deg, #3a72c5 0%, #52f2e0 100%);
+        min-height: 100vh;
+        padding: 20px;
+        color: var(--dark-color);
+        line-height: 1.6;
+      }
 
-            .container {
-                max-width: 900px;
-                margin: 0 auto;
-            }
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+      }
 
-            header {
-                text-align: center;
-                margin-bottom: 30px;
-                padding: 25px 20px;
-                background: white;
-                border-radius: var(--border-radius);
-                box-shadow: var(--card-shadow);
-            }
+      header {
+        text-align: center;
+        margin-bottom: 30px;
+        padding: 25px 20px;
+        background: white;
+        border-radius: var(--border-radius);
+        box-shadow: var(--card-shadow);
+      }
 
-            h1 {
-                color: var(--primary-color);
-                font-size: 2.5rem;
-                margin-bottom: 10px;
-            }
+      h1 {
+        color: var(--primary-color);
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+      }
 
-            .subtitle {
-                color: #666;
-                font-size: 1rem;
-                font-weight: normal;
-            }
+      .subtitle {
+        color: #666;
+        font-size: 1rem;
+        font-weight: normal;
+      }
 
-            .card {
-                background: white;
-                border-radius: var(--border-radius);
-                padding: 25px;
-                margin-bottom: 25px;
-                box-shadow: var(--card-shadow);
-                transition: transform 0.2s ease;
-            }
+      .card {
+        background: white;
+        border-radius: var(--border-radius);
+        padding: 25px;
+        margin-bottom: 25px;
+        box-shadow: var(--card-shadow);
+        transition: transform 0.2s ease;
+      }
 
-            .card:hover {
-                transform: translateY(-2px);
-            }
+      .card:hover {
+        transform: translateY(-2px);
+      }
 
-            h2 {
-                color: var(--primary-color);
-                border-bottom: 2px solid #eee;
-                padding-bottom: 10px;
-                margin-bottom: 20px;
-                font-size: 1.5rem;
-            }
+      h2 {
+        color: var(--primary-color);
+        border-bottom: 2px solid #eee;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+        font-size: 1.5rem;
+      }
 
-            .button-group {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 12px;
-                margin-bottom: 15px;
-            }
+      .button-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 15px;
+      }
 
-            button {
-                padding: 12px 20px;
-                border: none;
-                border-radius: 8px;
-                cursor: pointer;
-                font-weight: 600;
-                font-size: 0.95rem;
-                transition: all 0.2s ease;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 8px;
-                min-width: 120px;
-            }
+      button {
+        padding: 12px 20px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 0.95rem;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        min-width: 120px;
+      }
 
-            .btn-primary {
-                background-color: var(--primary-color);
-                color: white;
-            }
+      .btn-primary {
+        background-color: var(--primary-color);
+        color: white;
+      }
 
-            .btn-primary:hover {
-                background-color: #3a56d4;
-                box-shadow: 0 4px 8px rgba(67, 97, 238, 0.3);
-            }
+      .btn-primary:hover {
+        background-color: #3a56d4;
+        box-shadow: 0 4px 8px rgba(67, 97, 238, 0.3);
+      }
 
-            .btn-success {
-                background-color: var(--success-color);
-                color: white;
-            }
+      .btn-success {
+        background-color: var(--success-color);
+        color: white;
+      }
 
-            .btn-success:hover {
-                background-color: #29b0a3;
-            }
+      .btn-success:hover {
+        background-color: #29b0a3;
+      }
 
-            .btn-danger {
-                background-color: var(--danger-color);
-                color: white;
-            }
+      .btn-danger {
+        background-color: var(--danger-color);
+        color: white;
+      }
 
-            .btn-danger:hover {
-                background-color: #ff5252;
-            }
+      .btn-danger:hover {
+        background-color: #ff5252;
+      }
 
-            .btn-warning {
-                background-color: #ff9e00;
-                color: white;
-            }
+      .btn-warning {
+        background-color: #ff9e00;
+        color: white;
+      }
 
-            .btn-warning:hover {
-                background-color: #e68a00;
-            }
+      .btn-warning:hover {
+        background-color: #e68a00;
+      }
 
-            #now-playing {
-                font-size: 1.3rem;
-                font-weight: bold;
-                color: var(--success-color);
-                padding: 15px;
-                border-radius: 10px;
-                margin: 15px 0;
-                text-align: center;
-                background: rgba(240, 255, 253, 0.6) !important;
-                border-left: 5px solid var(--success-color); /* 保留左侧强调色 */
-            }
+      #now-playing {
+        font-size: 1.3rem;
+        font-weight: bold;
+        color: var(--success-color);
+        padding: 15px;
+        border-radius: 10px;
+        margin: 15px 0;
+        text-align: center;
+        background: rgba(240, 255, 253, 0.6) !important;
+        border-left: 5px solid var(--success-color); /* 保留左侧强调色 */
+      }
 
-            #logArea {
-                border-radius: 10px;
-                padding: 15px;
-                height: 200px;
-                overflow-y: auto;
-                font-family: 'Consolas', 'Monaco', monospace;
-                font-size: 0.9rem;
-                line-height: 1.4;
-                margin-top: 10px;
-                background: rgba(255, 255, 255, 0.3) !important;
-                border: 1px solid rgba(255, 255, 255, 0.3) !important;    
-            }
+      #logArea {
+        border-radius: 10px;
+        padding: 15px;
+        height: 200px;
+        overflow-y: auto;
+        font-family: "Consolas", "Monaco", monospace;
+        font-size: 0.9rem;
+        line-height: 1.4;
+        margin-top: 10px;
+        background: rgba(255, 255, 255, 0.3) !important;
+        border: 1px solid rgba(255, 255, 255, 0.3) !important;
+      }
 
-            .log-entry {
-                margin-bottom: 8px;
-                padding-bottom: 8px;
-                border-bottom: 1px dashed #eee;
-            }
+      .log-entry {
+        margin-bottom: 8px;
+        padding-bottom: 8px;
+        border-bottom: 1px dashed #eee;
+      }
 
-            .log-time {
-                color: #888;
-                font-size: 0.8rem;
-            }
+      .log-time {
+        color: #888;
+        font-size: 0.8rem;
+      }
 
-            .log-user {
-                color: #4361ee;
-                font-weight: bold;
-            }
+      .log-user {
+        color: #4361ee;
+        font-weight: bold;
+      }
 
-            .log-assistant {
-                color: #2ec4b6;
-                font-weight: bold;
-            }
+      .log-assistant {
+        color: #2ec4b6;
+        font-weight: bold;
+      }
 
-            .log-system {
-                color: #ff9e00;
-                font-weight: bold;
-            }
+      .log-system {
+        color: #ff9e00;
+        font-weight: bold;
+      }
 
-            .upload-section {
-                border-radius: 10px;
-                padding: 20px;
-                text-align: center;
-                margin: 20px 0;
-                background: transparent !important;
-                border: 2px dashed rgba(255, 255, 255, 1) !important;
-            }
+      .upload-section {
+        border-radius: 10px;
+        padding: 20px;
+        text-align: center;
+        margin: 20px 0;
+        background: transparent !important;
+        border: 2px dashed rgba(255, 255, 255, 1) !important;
+      }
 
-            .upload-section input[type="file"] {
-                padding: 10px;
-                border-radius: 20px;
-                width: 100%;
-                max-width: 400px;
-                margin-bottom: 15px;
-                background: rgba(159, 213, 242, 0.984);
-                border: 5px solid rgba(255, 255, 255, 0.2);
-                color: #333;
-            }
+      .upload-section input[type="file"] {
+        padding: 10px;
+        border-radius: 20px;
+        width: 100%;
+        max-width: 400px;
+        margin-bottom: 15px;
+        background: rgba(159, 213, 242, 0.984);
+        border: 5px solid rgba(255, 255, 255, 0.2);
+        color: #333;
+      }
 
-            #uploadMessage {
-                margin-top: 10px;
-                padding: 10px;
-                border-radius: 8px;
-                font-weight: bold;
-                text-align: center;
-            }
+      #uploadMessage {
+        margin-top: 10px;
+        padding: 10px;
+        border-radius: 8px;
+        font-weight: bold;
+        text-align: center;
+      }
 
-            .success-message {
-                background-color: #d4edda;
-                color: #155724;
-                border: 1px solid #c3e6cb;
-            }
+      .success-message {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+      }
 
-            .error-message {
-                background-color: #f8d7da;
-                color: #721c24;
-                border: 1px solid #f5c6cb;
-            }
+      .error-message {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+      }
 
-            #playlist {
-                list-style: none;
-                padding: 0;
-                margin-top: 15px;
-            }
+      #playlist {
+        list-style: none;
+        padding: 0;
+        margin-top: 15px;
+      }
 
-            #playlist li {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding: 15px;
-                margin-bottom: 12px;
-                border-radius: 10px;
-                border-left: 4px solid var(--primary-color);
-                transition: background 0.2s;
-                background: rgba(255, 255, 255, 0.3) !important;
-                backdrop-filter: blur(5px);
-                border: 1px solid rgba(255, 255, 255, 0.2);
-            }
+      #playlist li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        margin-bottom: 12px;
+        border-radius: 10px;
+        border-left: 4px solid var(--primary-color);
+        transition: background 0.2s;
+        background: rgba(255, 255, 255, 0.3) !important;
+        backdrop-filter: blur(5px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
 
-            #playlist li:hover {
-                background: #e9ecef;
-            }
+      #playlist li:hover {
+        background: #e9ecef;
+      }
 
-            .song-name {
-                font-weight: 500;
-                color: #333;
-                flex-grow: 1;
-                word-break: break-word;
-            }
+      .song-name {
+        font-weight: 500;
+        color: #333;
+        flex-grow: 1;
+        word-break: break-word;
+      }
 
-            footer {
-                text-align: center;
-                margin-top: 30px;
-                color: #777;
-                font-size: 0.9rem;
-                padding: 15px;
-            }
+      footer {
+        text-align: center;
+        margin-top: 30px;
+        color: #777;
+        font-size: 0.9rem;
+        padding: 15px;
+      }
 
-            @media (max-width: 768px) {
-                .container {
-                    padding: 10px;
-                }
+      @media (max-width: 768px) {
+        .container {
+          padding: 10px;
+        }
 
-                h1 {
-                    font-size: 2rem;
-                }
+        h1 {
+          font-size: 2rem;
+        }
 
-                .button-group {
-                    flex-direction: column;
-                }
+        .button-group {
+          flex-direction: column;
+        }
 
-                button {
-                    width: 100%;
-                }
-            }
-            
-            /* 优化后的照片容器样式 */
-            #snapshot-list {
-                display: grid;
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-                gap: 15px;
-                min-height: 150px;
-                border: 2px dashed #ddd;
-                border-radius: 10px;
-                padding: 15px;
-                background: #f9f9f9;
-                justify-items: center;
-            }
-            
-            /* 优化后的照片项 */
-            .snapshot-item {
-                position: relative;
-                cursor: pointer;
-                width: 100%;
-                max-width: 150px;
-                background: white;
-                border-radius: 8px;
-                overflow: hidden;
-                box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-                transition: transform 0.2s, box-shadow 0.2s;
-            }
-            
-            .snapshot-item:hover {
-                transform: scale(1.05);
-                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            }
-            
-            /* 优化后的照片预览容器 - 使用固定比例 */
-            .snapshot-preview {
-                position: relative;
-                width: 100%;
-                padding-top: 75%; /* 4:3 比例 */
-                overflow: hidden;
-                background: #f0f0f0;
-            }
-            
-            .snapshot-preview img {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                object-fit: contain; /* 改为contain，完整显示图片 */
-            }
-            
-            /* 优化后的删除按钮 - 更小更紧凑 */
-            .delete-btn {
-                position: absolute;
-                bottom: 40px;
-                right: 5px;
-                z-index: 10;
-                background: rgba(255, 0, 0, 0.7);
-                color: white;
-                border: none;
-                width: 20px;
-                height: 20px;
-                border-radius: 50%;
-                font-size: 12px;
-                cursor: pointer;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                transition: background 0.2s, transform 0.2s;
-                line-height: 1;
-                padding: 0;
-            }
-            
-            .delete-btn:hover {
-                background: rgba(255, 0, 0, 0.9);
-                transform: scale(1.1);
-            }
-            
-            /* 照片信息 */
-            .snapshot-info {
-                padding: 8px;
-                text-align: left;
-            }
-            
-            .snapshot-time {
-                font-size: 11px;
-                color: #333;
-                font-weight: bold;
-                margin-bottom: 2px;
-            }
-            
-            .snapshot-size {
-                font-size: 10px;
-                color: #666;
-            }
-            
-            /* 通知动画 */
-            @keyframes slideIn {
-                from {
-                    transform: translateX(100%);
-                    opacity: 0;
-                }
-                to {
-                    transform: translateX(0);
-                    opacity: 1;
-                }
-            }
-            
-            @keyframes slideOut {
-                from {
-                    transform: translateX(0);
-                    opacity: 1;
-                }
-                to {
-                    transform: translateX(100%);
-                    opacity: 0;
-                }
-            }
-            
-            /* 加载动画 */
-            @keyframes spin {
-                0% { transform: rotate(0deg); }
-                100% { transform: rotate(360deg); }
-            }
-            
-            .spinner {
-                display: inline-block;
-                width: 20px;
-                height: 20px;
-                border: 3px solid #f3f3f3;
-                border-top: 3px solid #3498db;
-                border-radius: 50%;
-                animation: spin 1s linear infinite;
-            }
-            /* 聊天消息动画 */
-            @keyframes fadeIn {
-                from {
-                    opacity: 0;
-                    transform: translateY(10px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
+        button {
+          width: 100%;
+        }
+      }
 
-            /* 消息样式 */
-            .message-container {
-                animation: fadeIn 0.3s ease-out;
-            }
+      /* 优化后的照片容器样式 */
+      #snapshot-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 15px;
+        min-height: 150px;
+        border: 2px dashed #ddd;
+        border-radius: 10px;
+        padding: 15px;
+        background: #f9f9f9;
+        justify-items: center;
+      }
 
-            .user-message {
-                animation: fadeIn 0.3s ease-out 0.1s backwards;
-            }
+      /* 优化后的照片项 */
+      .snapshot-item {
+        position: relative;
+        cursor: pointer;
+        width: 100%;
+        max-width: 150px;
+        background: white;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+      }
 
-            .assistant-message {
-                animation: fadeIn 0.3s ease-out 0.2s backwards;
-            }
-                        /* 毛玻璃效果通用类（也可直接作用于元素） */
-            header, .card, .upload-section, footer {
-            background: rgba(255, 255, 255, 0.2) !important;          /* 半透明白色基底 */
-            backdrop-filter: blur(10px) !important;                  /* 背景模糊 */
-            -webkit-backdrop-filter: blur(10px) !important;
-            border: 1px solid rgba(255, 255, 255, 0.3) !important;   /* 半透明边框增加质感 */
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;    /* 柔和阴影 */
-            color: #212529; /* 确保文字颜色不变 */
-            }
-            h1, h2, .subtitle, p {
-                text-shadow: 1px 1px 20px rgb(255, 255, 255);
-            }
-        /* ===== 美化聊天历史滚动条 ===== */
-        #chat-history {
+      .snapshot-item:hover {
+        transform: scale(1.05);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      /* 优化后的照片预览容器 - 使用固定比例 */
+      .snapshot-preview {
+        position: relative;
+        width: 100%;
+        padding-top: 75%; /* 4:3 比例 */
+        overflow: hidden;
+        background: #f0f0f0;
+      }
+
+      .snapshot-preview img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: contain; /* 改为contain，完整显示图片 */
+      }
+
+      /* 优化后的删除按钮 - 更小更紧凑 */
+      .delete-btn {
+        position: absolute;
+        bottom: 40px;
+        right: 5px;
+        z-index: 10;
+        background: rgba(255, 0, 0, 0.7);
+        color: white;
+        border: none;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        font-size: 12px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition:
+          background 0.2s,
+          transform 0.2s;
+        line-height: 1;
+        padding: 0;
+      }
+
+      .delete-btn:hover {
+        background: rgba(255, 0, 0, 0.9);
+        transform: scale(1.1);
+      }
+
+      /* 照片信息 */
+      .snapshot-info {
+        padding: 8px;
+        text-align: left;
+      }
+
+      .snapshot-time {
+        font-size: 11px;
+        color: #333;
+        font-weight: bold;
+        margin-bottom: 2px;
+      }
+
+      .snapshot-size {
+        font-size: 10px;
+        color: #666;
+      }
+
+      /* 通知动画 */
+      @keyframes slideIn {
+        from {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+
+      @keyframes slideOut {
+        from {
+          transform: translateX(0);
+          opacity: 1;
+        }
+        to {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+      }
+
+      /* 加载动画 */
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .spinner {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 3px solid #f3f3f3;
+        border-top: 3px solid #3498db;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+      /* 聊天消息动画 */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* 消息样式 */
+      .message-container {
+        animation: fadeIn 0.3s ease-out;
+      }
+
+      .user-message {
+        animation: fadeIn 0.3s ease-out 0.1s backwards;
+      }
+
+      .assistant-message {
+        animation: fadeIn 0.3s ease-out 0.2s backwards;
+      }
+      /* 毛玻璃效果通用类（也可直接作用于元素） */
+      header,
+      .card,
+      .upload-section,
+      footer {
+        background: rgba(255, 255, 255, 0.2) !important; /* 半透明白色基底 */
+        backdrop-filter: blur(10px) !important; /* 背景模糊 */
+        -webkit-backdrop-filter: blur(10px) !important;
+        border: 1px solid rgba(255, 255, 255, 0.3) !important; /* 半透明边框增加质感 */
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important; /* 柔和阴影 */
+        color: #212529; /* 确保文字颜色不变 */
+      }
+      h1,
+      h2,
+      .subtitle,
+      p {
+        text-shadow: 1px 1px 20px rgb(255, 255, 255);
+      }
+      /* ===== 美化聊天历史滚动条 ===== */
+      #chat-history {
         /* Firefox 滚动条样式 */
         scrollbar-width: thin;
         scrollbar-color: #4361ee rgba(255, 255, 255, 0.3);
-        }
+      }
 
-        /* WebKit 内核浏览器滚动条样式 */
-        #chat-history::-webkit-scrollbar {
-        width: 6px;               /* 垂直滚动条宽度 */
-        height: 6px;              /* 水平滚动条高度（若存在） */
-        }
+      /* WebKit 内核浏览器滚动条样式 */
+      #chat-history::-webkit-scrollbar {
+        width: 6px; /* 垂直滚动条宽度 */
+        height: 6px; /* 水平滚动条高度（若存在） */
+      }
 
-        #chat-history::-webkit-scrollbar-track {
+      #chat-history::-webkit-scrollbar-track {
         background: rgba(255, 255, 255, 0.3);
         border-radius: 10px;
-        margin: 4px 0;            /* 上下留边距，避免贴边 */
-        }
+        margin: 4px 0; /* 上下留边距，避免贴边 */
+      }
 
-        #chat-history::-webkit-scrollbar-thumb {
-        background: #4361ee;      /* 主题色滑块 */
+      #chat-history::-webkit-scrollbar-thumb {
+        background: #4361ee; /* 主题色滑块 */
         border-radius: 10px;
         border: 1px solid rgba(255, 255, 255, 0.2); /* 轻微内边框增加立体感 */
+      }
+
+      #chat-history::-webkit-scrollbar-thumb:hover {
+        background: #3a56d4; /* 悬停加深 */
+      }
+
+      #chat-history::-webkit-scrollbar-corner {
+        background: transparent; /* 角落透明 */
+      }
+      /* ===== 毛玻璃效果（用户提供样式） ===== */
+      header,
+      .card,
+      .upload-section,
+      footer {
+        background-color: rgba(89, 89, 89, 0.1) !important;
+        backdrop-filter: blur(10px) !important;
+        -webkit-backdrop-filter: blur(10px) !important;
+        border: 0.666667px solid rgba(255, 255, 255, 0.18) !important;
+        box-shadow: rgba(14, 14, 14, 0.19) 0px 6px 15px 0px !important;
+        -webkit-box-shadow: rgba(14, 14, 14, 0.19) 0px 6px 15px 0px !important;
+        border-radius: 14px !important;
+        -webkit-border-radius: 14px !important;
+        /* 不改变文字颜色，保持原有可读性 */
+        color: inherit;
+      }
+
+      /* 内部元素背景半透明调整 */
+      #logArea {
+        background: rgba(255, 255, 255, 0.7) !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        border-radius: 10px;
+      }
+
+      #now-playing {
+        background: rgba(240, 255, 253, 0.6) !important;
+        border-left: 5px solid var(--success-color);
+        border-radius: 10px;
+      }
+
+      #chat-history {
+        background: rgba(255, 255, 255, 0.5) !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        border-radius: 10px;
+      }
+
+      .upload-section input[type="file"] {
+        background: rgba(255, 255, 255, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        color: #333;
+      }
+
+      /* 可选：如果希望标题更突出，添加轻微文字阴影 */
+      h1,
+      h2,
+      .subtitle {
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      }
+      body {
+        background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+        background-size: 400% 400%;
+        animation: gradient 15s ease infinite;
+        min-height: 100vh;
+        padding: 20px;
+        color: var(--dark-color); /* 保留原有文字颜色，或根据需要修改 */
+      }
+
+      @keyframes gradient {
+        0% {
+          background-position: 0% 50%;
         }
-
-        #chat-history::-webkit-scrollbar-thumb:hover {
-        background: #3a56d4;      /* 悬停加深 */
+        50% {
+          background-position: 100% 50%;
         }
-
-        #chat-history::-webkit-scrollbar-corner {
-        background: transparent;  /* 角落透明 */
+        100% {
+          background-position: 0% 50%;
         }
-        /* ===== 毛玻璃效果（用户提供样式） ===== */
-header, .card, .upload-section, footer {
-  background-color: rgba(89, 89, 89, 0.1) !important;
-  backdrop-filter: blur(10px) !important;
-  -webkit-backdrop-filter: blur(10px) !important;
-  border: 0.666667px solid rgba(255, 255, 255, 0.18) !important;
-  box-shadow: rgba(14, 14, 14, 0.19) 0px 6px 15px 0px !important;
-  -webkit-box-shadow: rgba(14, 14, 14, 0.19) 0px 6px 15px 0px !important;
-  border-radius: 14px !important;
-  -webkit-border-radius: 14px !important;
-  /* 不改变文字颜色，保持原有可读性 */
-  color: inherit;
-}
+      }
+      /* 轮播容器 */
+      .morph-container {
+        position: relative;
+        font-size: 1.2rem; /* 与原有 .subtitle 字体大小一致，可自行调整 */
+        font-weight: 500;
+        filter: url(#threshold); /* 应用 SVG 阈值滤镜 */
+        user-select: none;
+        display: inline-block; /* 让容器宽度根据内容自适应 */
+        min-width: 12ch; /* 避免宽度变化导致布局抖动，根据最长词调整 */
+        text-align: center;
+      }
 
-/* 内部元素背景半透明调整 */
-#logArea {
-  background: rgba(255, 255, 255, 0.7) !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  border-radius: 10px;
-}
+      /* 文字旋转包装器 */
+      .word-rotator {
+        position: relative;
+        height: 1.5em; /* 固定高度，防止容器高度变化 */
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
 
-#now-playing {
-  background: rgba(240, 255, 253, 0.6) !important;
-  border-left: 5px solid var(--success-color);
-  border-radius: 10px;
-}
+      /* 单个轮播词 */
+      .word {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        opacity: 0;
+        color: #ffffff; /* 保持白色，与毛玻璃背景形成对比 */
+        white-space: nowrap;
+        animation: rotate-words 9s infinite ease-in-out;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      }
 
-#chat-history {
-  background: rgba(255, 255, 255, 0.5) !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  border-radius: 10px;
-}
+      /* 三个词的动画延迟 */
+      .word:nth-child(1) {
+        animation-delay: 0s;
+      }
+      .word:nth-child(2) {
+        animation-delay: 3s;
+      }
+      .word:nth-child(3) {
+        animation-delay: 6s;
+      }
 
-.upload-section input[type="file"] {
-  background: rgba(255, 255, 255, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  color: #333;
-}
+      /* 轮播关键帧：模糊 -> 清晰 -> 模糊 */
+      @keyframes rotate-words {
+        0% {
+          opacity: 0;
+          filter: blur(20px);
+          transform: translate(-50%, -50%) scale(0.8);
+        }
+        5% {
+          opacity: 0.5;
+          filter: blur(10px);
+        }
+        15%,
+        35% {
+          opacity: 1;
+          filter: blur(0px);
+          transform: translate(-50%, -50%) scale(1);
+        }
+        45% {
+          opacity: 0.5;
+          filter: blur(10px);
+        }
+        50%,
+        100% {
+          opacity: 0;
+          filter: blur(20px);
+          transform: translate(-50%, -50%) scale(1.2);
+        }
+      }
 
-/* 可选：如果希望标题更突出，添加轻微文字阴影 */
-h1, h2, .subtitle {
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-body {
-    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-    background-size: 400% 400%;
-    animation: gradient 15s ease infinite;
-    min-height: 100vh;
-    padding: 20px;
-    color: var(--dark-color); /* 保留原有文字颜色，或根据需要修改 */
-}
+      /* 可选：调整副标题的外边距，与标题保持间距 */
+      header .subtitle {
+        margin-top: 10px; /* 根据实际情况微调 */
+        line-height: 1.4;
+        color: inherit; /* 继承原有颜色，或直接设白色 */
+      }
+      .filters {
+        position: absolute;
+        width: 0;
+        height: 0;
+        pointer-events: none;
+      }
 
-@keyframes gradient {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-        </style>
-    </head>
-    <body>
-        <div class="container">
-            <header>
-                <h1>手机点歌机</h1>
-                <p class="subtitle">语音控制 · 在线点播 · 轻松上传</p>
-            </header>
+      /* 标题轮播容器 */
+      .title-rotator {
+        font-size: 70px; /* 与原 h1 大小一致，可根据需要调整 */
+        font-weight: 700; /* 加粗 */
+        line-height: 1.2;
+        min-width: 10ch; /* 防止宽度抖动 */
+      }
 
-            <div class="card">
-                <h2>🎤 语音助手控制</h2>
-                <div class="button-group">
-                    <button class="btn-primary" onclick="startAssistant()">启动语音助手</button>
-                    <button class="btn-danger" onclick="stopAssistant()">停止助手</button>
-                   
-                </div>
+      /* 如果需要，可以移除或覆盖之前 .subtitle 的样式 */
+      /* 如果 .subtitle 类仍存在但未使用，可保留；但若想完全清除，可删除或注释掉相关代码 */
 
-                <h3>助手日志</h3>
-                <div id="logArea">
-                    暂无日志
-                </div>
-            </div>
-            <div class="card">
-                <h2>💬 AI 文字对话</h2>
-                
-                <!-- 聊天历史记录 -->
-                <div id="chat-history" style="
-                    height: 300px;
-                    overflow-y: auto;
-                    border-radius: 10px;
-                    padding: 15px;
-                    margin-bottom: 15px;
-                    font-family: 'Segoe UI', Arial, sans-serif;
-                    background: rgba(255, 255, 255, 0.3) !important;
-                    border: 1px solid rgba(255, 255, 255, 0.3) !important;
-                ">
-                    <div class="message-container" style="text-align: center; color: #999; padding: 20px;">
-                        暂无对话记录，在下方输入框开始聊天...
-                    </div>
-                </div>
-                
-                <!-- 输入区域 -->
-                <div style="display: flex; gap: 10px;">
-                    <input type="text" 
-                        id="chat-input" 
-                        placeholder="输入您的问题..." 
-                        style="
-                                flex: 1;
-                                padding: 12px 15px;
-                                border: 2px solid #e1e5e9;
-                                border-radius: 8px;
-                                font-size: 16px;
-                                transition: border-color 0.2s;
-                        "
-                        onkeypress="if(event.key === 'Enter') sendMessage()"
-                        onfocus="this.style.borderColor='#4361ee'"
-                        onblur="this.style.borderColor='#e1e5e9'">
-                    
-                    <button id="send-button" 
-                            onclick="sendMessage()" 
-                            style="
-                                padding: 12px 25px;
-                                background: #4361ee;
-                                color: white;
-                                border: none;
-                                border-radius: 8px;
-                                font-weight: 600;
-                                cursor: pointer;
-                                transition: background 0.2s;
-                            "
-                            onmouseover="this.style.backgroundColor='#3a56d4'"
-                            onmouseout="this.style.backgroundColor='#4361ee'"
-                            onmousedown="this.style.backgroundColor='#2e4bcc'"
-                            onmouseup="this.style.backgroundColor='#3a56d4'">
-                        发送
-                    </button>
-                </div>
-                
-                <!-- 常用快捷问题 -->
-                <div style="margin-top: 15px;">
-                    <div style="font-size: 14px; color: #666; margin-bottom: 8px;">快捷提问:</div>
-                    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-                        <button onclick="setQuickQuestion(this.innerText)" style="
-                            padding: 6px 12px;
-                            background: #f0f5ff;
-                            color: #4361ee;
-                            border: 1px solid #c3d0ff;
-                            border-radius: 20px;
-                            font-size: 13px;
-                            cursor: pointer;
-                        ">打招呼</button>
-                        <button onclick="setQuickQuestion(this.innerText)" style="
-                            padding: 6px 12px;
-                            background: #f0f5ff;
-                            color: #4361ee;
-                            border: 1px solid #c3d0ff;
-                            border-radius: 20px;
-                            font-size: 13px;
-                            cursor: pointer;
-                        ">随机播放一首歌</button>
-                        <button onclick="setQuickQuestion(this.innerText)" style="
-                            padding: 6px 12px;
-                            background: #f0f5ff;
-                            color: #4361ee;
-                            border: 1px solid #c3d0ff;
-                            border-radius: 20px;
-                            font-size: 13px;
-                            cursor: pointer;
-                        ">早安</button>
-                        <button onclick="setQuickQuestion(this.innerText)" style="
-                            padding: 6px 12px;
-                            background: #f0f5ff;
-                            color: #4361ee;
-                            border: 1px solid #c3d0ff;
-                            border-radius: 20px;
-                            font-size: 13px;
-                            cursor: pointer;
-                        ">谢谢</button>
-                    </div>
-                </div>
-            </div>
+      /* 调整 header 内边距（原 h1 有 margin-bottom，现在可能不需要） */
+      header {
+        padding: 25px 20px; /* 根据视觉效果微调 */
+        text-align: center;
+      }
 
-            <div class="card">
-                <h2>🎵 播放控制</h2>
-                <div id="now-playing">当前未播放</div>
-                <div class="button-group">
-                    <button class="btn-danger" onclick="stopMusic()">停止播放</button>
-                </div>
-            </div>
+      /* 确保轮播文字在毛玻璃背景下清晰可见 */
+      .word {
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+        color: white; /* 或保持原有颜色 */
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 阈值滤镜，用于文字轮播的融合效果 -->
+    <svg class="filters" style="position: absolute; width: 0; height: 0">
+      <defs>
+        <filter id="threshold">
+          <feColorMatrix
+            in="SourceGraphic"
+            type="matrix"
+            values="1 0 0 0 0
+                    0 1 0 0 0
+                    0 0 1 0 0
+                    0 0 0 25 -9"
+            result="goo"
+          />
+          <feComposite in="SourceGraphic" in2="goo" operator="atop" />
+        </filter>
+      </defs>
+    </svg>
+    <div class="container">
+      <header>
+        <div class="morph-container title-rotator">
+          <div class="word-rotator">
+            <div class="word">AI助手</div>
+            <div class="word">远程摄像</div>
+            <div class="word">音频上传</div>
+          </div>
+        </div>
+        <p>手机语音助手控制台</p>
+      </header>
 
-            <div class="card">
-                <h2>上传新歌曲</h2>
-                <div class="upload-section">
-                    <form id="uploadForm" enctype="multipart/form-data">
-                        <input type="file" name="file" accept=".mp3" required>
-                        <button class="btn-success" type="button" onclick="uploadFile()">上传歌曲文件</button>
-                    </form>
-                    <div id="uploadMessage"></div>
-                </div>
-            </div>
-
-            <div class="card">
-                <h2>歌曲列表</h2>
-                <ul id="playlist">
-                    {% for file in files %}
-                    <li>
-                        <span class="song-name">{{ file }}</span>
-                        <button class="btn-primary" onclick="playMusic('{{ file }}')">播放</button>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
-            
-            <div class="card">
-                <h2>📷 摄像头拍照</h2>
-                <div id="camera-status" class="status">摄像头状态: 就绪</div>
-                
-                <div class="button-group">
-                    <button class="btn-primary" onclick="takePhoto(1)">前置摄像头拍照</button>
-                    <button class="btn-primary" onclick="takePhoto(0)">后置主摄拍照</button>
-                    <button class="btn-warning" onclick="clearPhotos()">清空预览</button>
-                </div>
-                
-                <div id="camera-result" style="margin-top: 20px; text-align: center;">
-                    <!-- 拍照结果会显示在这里 -->
-                </div>
-                
-            </div>
-            
-            <footer>
-                <p>基于HTML5 & JavaScript构建&nbsp;&nbsp;|&nbsp;&nbsp;©2026 DJH</p>
-            </footer>
+      <div class="card">
+        <h2>🎤 语音助手控制</h2>
+        <div class="button-group">
+          <button class="btn-primary" onclick="startAssistant()">
+            启动语音助手
+          </button>
+          <button class="btn-danger" onclick="stopAssistant()">停止助手</button>
         </div>
 
-        <script>
-            // 音乐播放控制函数
-            function playMusic(filename) {
-                fetch('/play/' + encodeURIComponent(filename))
-                    .then(response => response.json())
-                    .then(data => {
-                        document.getElementById('now-playing').innerText = '正在播放：' + data.song;
-                    });
+        <h3>助手日志</h3>
+        <div id="logArea">暂无日志</div>
+      </div>
+      <div class="card">
+        <h2>💬 AI 文字对话</h2>
+
+        <!-- 聊天历史记录 -->
+        <div
+          id="chat-history"
+          style="
+            height: 300px;
+            overflow-y: auto;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            font-family: &quot;Segoe UI&quot;, Arial, sans-serif;
+            background: rgba(255, 255, 255, 0.3) !important;
+            border: 1px solid rgba(255, 255, 255, 0.3) !important;
+          "
+        >
+          <div
+            class="message-container"
+            style="text-align: center; color: #999; padding: 20px"
+          >
+            暂无对话记录，在下方输入框开始聊天...
+          </div>
+        </div>
+
+        <!-- 输入区域 -->
+        <div style="display: flex; gap: 10px">
+          <input
+            type="text"
+            id="chat-input"
+            placeholder="输入您的问题..."
+            style="
+              flex: 1;
+              padding: 12px 15px;
+              border: 2px solid #e1e5e9;
+              border-radius: 8px;
+              font-size: 16px;
+              transition: border-color 0.2s;
+            "
+            onkeypress="if (event.key === 'Enter') sendMessage();"
+            onfocus="this.style.borderColor = '#4361ee'"
+            onblur="this.style.borderColor = '#e1e5e9'"
+          />
+
+          <button
+            id="send-button"
+            onclick="sendMessage()"
+            style="
+              padding: 12px 25px;
+              background: #4361ee;
+              color: white;
+              border: none;
+              border-radius: 8px;
+              font-weight: 600;
+              cursor: pointer;
+              transition: background 0.2s;
+            "
+            onmouseover="this.style.backgroundColor = '#3a56d4'"
+            onmouseout="this.style.backgroundColor = '#4361ee'"
+            onmousedown="this.style.backgroundColor = '#2e4bcc'"
+            onmouseup="this.style.backgroundColor = '#3a56d4'"
+          >
+            发送
+          </button>
+        </div>
+
+        <!-- 常用快捷问题 -->
+        <div style="margin-top: 15px">
+          <div style="font-size: 14px; color: #666; margin-bottom: 8px">
+            快捷提问:
+          </div>
+          <div style="display: flex; flex-wrap: wrap; gap: 8px">
+            <button
+              onclick="setQuickQuestion(this.innerText)"
+              style="
+                padding: 6px 12px;
+                background: #f0f5ff;
+                color: #4361ee;
+                border: 1px solid #c3d0ff;
+                border-radius: 20px;
+                font-size: 13px;
+                cursor: pointer;
+              "
+            >
+              打招呼
+            </button>
+            <button
+              onclick="setQuickQuestion(this.innerText)"
+              style="
+                padding: 6px 12px;
+                background: #f0f5ff;
+                color: #4361ee;
+                border: 1px solid #c3d0ff;
+                border-radius: 20px;
+                font-size: 13px;
+                cursor: pointer;
+              "
+            >
+              随机播放一首歌
+            </button>
+            <button
+              onclick="setQuickQuestion(this.innerText)"
+              style="
+                padding: 6px 12px;
+                background: #f0f5ff;
+                color: #4361ee;
+                border: 1px solid #c3d0ff;
+                border-radius: 20px;
+                font-size: 13px;
+                cursor: pointer;
+              "
+            >
+              早安
+            </button>
+            <button
+              onclick="setQuickQuestion(this.innerText)"
+              style="
+                padding: 6px 12px;
+                background: #f0f5ff;
+                color: #4361ee;
+                border: 1px solid #c3d0ff;
+                border-radius: 20px;
+                font-size: 13px;
+                cursor: pointer;
+              "
+            >
+              谢谢
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>🎵 播放控制</h2>
+        <div id="now-playing">当前未播放</div>
+        <div class="button-group">
+          <button class="btn-danger" onclick="stopMusic()">停止播放</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>上传新歌曲</h2>
+        <div class="upload-section">
+          <form id="uploadForm" enctype="multipart/form-data">
+            <input type="file" name="file" accept=".mp3" required />
+            <button class="btn-success" type="button" onclick="uploadFile()">
+              上传歌曲文件
+            </button>
+          </form>
+          <div id="uploadMessage"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>歌曲列表</h2>
+        <ul id="playlist">
+          {% for file in files %}
+          <li>
+            <span class="song-name">{{ file }}</span>
+            <button class="btn-primary" onclick="playMusic('{{ file }}')">
+              播放
+            </button>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>📷 摄像头拍照</h2>
+        <div id="camera-status" class="status">摄像头状态: 就绪</div>
+
+        <div class="button-group">
+          <button class="btn-primary" onclick="takePhoto(1)">
+            前置摄像头拍照
+          </button>
+          <button class="btn-primary" onclick="takePhoto(0)">
+            后置主摄拍照
+          </button>
+          <button class="btn-warning" onclick="clearPhotos()">清空预览</button>
+        </div>
+
+        <div id="camera-result" style="margin-top: 20px; text-align: center">
+          <!-- 拍照结果会显示在这里 -->
+        </div>
+      </div>
+
+      <footer>
+        <p>基于HTML5 & JavaScript构建&nbsp;&nbsp;|&nbsp;&nbsp;©2026 DJH</p>
+      </footer>
+    </div>
+
+    <script>
+      // 音乐播放控制函数
+      function playMusic(filename) {
+        fetch("/play/" + encodeURIComponent(filename))
+          .then((response) => response.json())
+          .then((data) => {
+            document.getElementById("now-playing").innerText =
+              "正在播放：" + data.song;
+          });
+      }
+
+      function stopMusic() {
+        fetch("/stop")
+          .then((response) => response.json())
+          .then((data) => {
+            document.getElementById("now-playing").innerText = "已停止";
+          });
+      }
+
+      setInterval(() => {
+        fetch("/status")
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.playing) {
+              document.getElementById("now-playing").innerText =
+                "正在播放：" + data.song;
+            } else {
+              document.getElementById("now-playing").innerText = "当前未播放";
             }
-            
-            function stopMusic() {
-                fetch('/stop')
-                    .then(response => response.json())
-                    .then(data => {
-                        document.getElementById('now-playing').innerText = '已停止';
-                    });
+          });
+      }, 2000);
+
+      // 文件上传功能
+      function uploadFile() {
+        const formData = new FormData(document.getElementById("uploadForm"));
+        fetch("/upload", {
+          method: "POST",
+          body: formData,
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            const uploadMessage = document.getElementById("uploadMessage");
+            if (data.success) {
+              uploadMessage.innerText = "上传成功：" + data.filename;
+              uploadMessage.className = "success-message";
+              loadPlaylist();
+            } else {
+              uploadMessage.innerText =
+                "上传失败：" + (data.error || "未知错误");
+              uploadMessage.className = "error-message";
             }
-            
-            setInterval(() => {
-                fetch('/status')
-                    .then(res => res.json())
-                    .then(data => {
-                        if (data.playing) {
-                            document.getElementById('now-playing').innerText = '正在播放：' + data.song;
-                        } else {
-                            document.getElementById('now-playing').innerText = '当前未播放';
-                        }
-                    });
-            }, 2000);
-            
-            // 文件上传功能
-            function uploadFile() {
-                const formData = new FormData(document.getElementById('uploadForm'));
-                fetch('/upload', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => response.json())
-                .then(data => {
-                    const uploadMessage = document.getElementById('uploadMessage');
-                    if (data.success) {
-                        uploadMessage.innerText = '上传成功：' + data.filename;
-                        uploadMessage.className = 'success-message';
-                        loadPlaylist();
-                    } else {
-                        uploadMessage.innerText = '上传失败：' + (data.error || '未知错误');
-                        uploadMessage.className = 'error-message';
-                    }
-                })
-                .catch(err => {
-                    const uploadMessage = document.getElementById('uploadMessage');
-                    uploadMessage.innerText = '网络错误';
-                    uploadMessage.className = 'error-message';
-                });
+          })
+          .catch((err) => {
+            const uploadMessage = document.getElementById("uploadMessage");
+            uploadMessage.innerText = "网络错误";
+            uploadMessage.className = "error-message";
+          });
+      }
+
+      function loadPlaylist() {
+        fetch("/list")
+          .then((res) => res.json())
+          .then((files) => {
+            const list = document.getElementById("playlist");
+            list.innerHTML = "";
+            files.forEach((file) => {
+              const li = document.createElement("li");
+              li.innerHTML = `<span class="song-name">${file}</span> <button class="btn-primary" onclick="playMusic('${file}')">▶️ 播放</button>`;
+              list.appendChild(li);
+            });
+          });
+      }
+
+      // 语音助手控制
+      function startAssistant() {
+        fetch("/start_assistant")
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.status === "started") {
+              alert("语音助手已启动");
+            } else if (data.status === "already_running") {
+              alert("助手已在运行");
+            } else {
+              alert("启动失败：" + (data.error || "未知错误"));
             }
-            
-            function loadPlaylist() {
-                fetch('/list')
-                    .then(res => res.json())
-                    .then(files => {
-                        const list = document.getElementById('playlist');
-                        list.innerHTML = '';
-                        files.forEach(file => {
-                            const li = document.createElement('li');
-                            li.innerHTML = `<span class="song-name">${file}</span> <button class="btn-primary" onclick="playMusic('${file}')">▶️ 播放</button>`;
-                            list.appendChild(li);
-                        });
-                    });
+          })
+          .catch((err) => alert("网络错误"));
+      }
+
+      function stopAssistant() {
+        fetch("/stop_assistant")
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.status === "stopped") {
+              alert("语音助手已停止");
+            } else {
+              alert("助手未在运行");
             }
-            
-            // 语音助手控制
-            function startAssistant() {
-                fetch('/start_assistant')
-                .then(res => res.json())
-                .then(data => {
-                    if (data.status === 'started') {
-                        alert('语音助手已启动');
-                    } else if (data.status === 'already_running') {
-                        alert('助手已在运行');
-                    } else {
-                        alert('启动失败：' + (data.error || '未知错误'));
-                    }
-                })
-                .catch(err => alert('网络错误'));
+          })
+          .catch((err) => alert("网络错误"));
+      }
+
+      // 日志功能
+      function fetchLogs() {
+        fetch("/get_assistant_logs")
+          .then((res) => res.json())
+          .then((logs) => {
+            const logArea = document.getElementById("logArea");
+            if (logs.length === 0) {
+              logArea.innerHTML = "暂无日志";
+              return;
             }
-            
-            function stopAssistant() {
-                fetch('/stop_assistant')
-                    .then(res => res.json())
-                    .then(data => {
-                        if (data.status === 'stopped') {
-                            alert('语音助手已停止');
-                        } else {
-                            alert('助手未在运行');
-                        }
-                    })
-                    .catch(err => alert('网络错误'));
-            }
-            
-            // 日志功能
-            function fetchLogs() {
-                fetch('/get_assistant_logs')
-                    .then(res => res.json())
-                    .then(logs => {
-                        const logArea = document.getElementById('logArea');
-                        if (logs.length === 0) {
-                            logArea.innerHTML = '暂无日志';
-                            return;
-                        }
-                        let html = '';
-                        logs.forEach(log => {
-                            let prefix = '';
-                            let prefixClass = '';
-                            if (log.type === 'user') {
-                                prefix = '👤 你说';
-                                prefixClass = 'log-user';
-                            } else if (log.type === 'assistant') {
-                                prefix = '🤖 助手';
-                                prefixClass = 'log-assistant';
-                            } else if (log.type === 'unknown') {
-                                prefix = '👂 尝试唤醒';
-                                prefixClass = 'log-system';
-                            } else {
-                                prefix = '⚙️ 系统';
-                                prefixClass = 'log-system';
-                            }
-                            html += `<div class="log-entry"><span class="log-time">[${log.time}]</span> <span class="${prefixClass}">${prefix}:</span> ${log.text}</div>`;
-                        });
-                        logArea.innerHTML = html;
-                        logArea.scrollTop = logArea.scrollHeight;
-                    })
-                    .catch(err => console.log('获取日志失败', err));
-            }
-            
-            setInterval(fetchLogs, 2000);
-            fetchLogs();
-            
-            // 摄像头控制函数
-            function takePhoto(cameraId) {
-                const cameraNames = {
-                    0: '后置主摄',
-                    1: '前置摄像头'
-                };
-                
-                const cameraName = cameraNames[cameraId] || `摄像头 ${cameraId}`;
-                const resultDiv = document.getElementById('camera-result');
-                
-                // 显示加载状态
-                resultDiv.innerHTML = `
+            let html = "";
+            logs.forEach((log) => {
+              let prefix = "";
+              let prefixClass = "";
+              if (log.type === "user") {
+                prefix = "👤 你说";
+                prefixClass = "log-user";
+              } else if (log.type === "assistant") {
+                prefix = "🤖 助手";
+                prefixClass = "log-assistant";
+              } else if (log.type === "unknown") {
+                prefix = "👂 尝试唤醒";
+                prefixClass = "log-system";
+              } else {
+                prefix = "⚙️ 系统";
+                prefixClass = "log-system";
+              }
+              html += `<div class="log-entry"><span class="log-time">[${log.time}]</span> <span class="${prefixClass}">${prefix}:</span> ${log.text}</div>`;
+            });
+            logArea.innerHTML = html;
+            logArea.scrollTop = logArea.scrollHeight;
+          })
+          .catch((err) => console.log("获取日志失败", err));
+      }
+
+      setInterval(fetchLogs, 2000);
+      fetchLogs();
+
+      // 摄像头控制函数
+      function takePhoto(cameraId) {
+        const cameraNames = {
+          0: "后置主摄",
+          1: "前置摄像头",
+        };
+
+        const cameraName = cameraNames[cameraId] || `摄像头 ${cameraId}`;
+        const resultDiv = document.getElementById("camera-result");
+
+        // 显示加载状态
+        resultDiv.innerHTML = `
                     <div style="color: #ff9800;">
                         <div class="spinner"></div>
                         正在拍照，请稍候...
                     </div>
                 `;
-                
-                // 发送拍照请求
-                fetch(`/camera/snapshot/${cameraId}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            // 显示拍照结果
-                            resultDiv.innerHTML = `
+
+        // 发送拍照请求
+        fetch(`/camera/snapshot/${cameraId}`)
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.success) {
+              // 显示拍照结果
+              resultDiv.innerHTML = `
                                 <div style="color: #4CAF50; font-weight: bold; margin-bottom: 10px;">
                                     ✅ 拍照成功！
                                 </div>
@@ -898,41 +1097,43 @@ body {
                                     <div><strong>时间:</strong> ${new Date().toLocaleTimeString()}</div>
                                 </div>
                             `;
-                            
-                            // 添加到日志
-                            addToLog(`📸 拍摄照片: ${data.filename} (${cameraName})`, 'system');
-                        } else {
-                            resultDiv.innerHTML = `
+
+              // 添加到日志
+              addToLog(
+                `📸 拍摄照片: ${data.filename} (${cameraName})`,
+                "system",
+              );
+            } else {
+              resultDiv.innerHTML = `
                                 <div style="color: #f44336; font-weight: bold;">
                                     ❌ 拍照失败: ${data.error}
                                 </div>
                             `;
-                        }
-                    })
-                    .catch(err => {
-                        console.error('拍照请求失败:', err);
-                        resultDiv.innerHTML = `
+            }
+          })
+          .catch((err) => {
+            console.error("拍照请求失败:", err);
+            resultDiv.innerHTML = `
                             <div style="color: #f44336; font-weight: bold;">
                                 ❌ 网络错误: ${err.message}
                             </div>
                         `;
-                    });
-            }
-            
-            // 加载最近照片
-            
-            
-            // 清空预览
-            function clearPhotos() {
-                document.getElementById('camera-result').innerHTML = '';
-                document.getElementById('camera-status').innerText = '摄像头状态: 就绪';
-                document.getElementById('camera-status').style.color = '#666';
-            }
-            
-            // 全屏查看图片
-            function showFullScreenImage(imageSrc, filename) {
-                const viewer = document.createElement('div');
-                viewer.style.cssText = `
+          });
+      }
+
+      // 加载最近照片
+
+      // 清空预览
+      function clearPhotos() {
+        document.getElementById("camera-result").innerHTML = "";
+        document.getElementById("camera-status").innerText = "摄像头状态: 就绪";
+        document.getElementById("camera-status").style.color = "#666";
+      }
+
+      // 全屏查看图片
+      function showFullScreenImage(imageSrc, filename) {
+        const viewer = document.createElement("div");
+        viewer.style.cssText = `
                     position: fixed;
                     top: 0;
                     left: 0;
@@ -946,8 +1147,8 @@ body {
                     align-items: center;
                     padding: 20px;
                 `;
-                
-                viewer.innerHTML = `
+
+        viewer.innerHTML = `
                     <div style="
                         position: relative;
                         width: 100%;
@@ -1002,100 +1203,106 @@ body {
                         </div>
                     </div>
                 `;
-                
-                document.body.appendChild(viewiewer);
-                
-                viewer.onclick = function(e) {
-                    if (e.target === this) {
-                        document.body.removeChild(this);
-                    }
-                };
-            }
-            
-            // 日志辅助函数
-            function addToLog(message, type) {
-                const logEntry = {
-                    time: new Date().toLocaleTimeString(),
-                    type: type,
-                    text: message
-                };
-                
-                fetch('/log_assistant', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(logEntry)
-                }).catch(console.error);
-            }
-            
-            // 页面加载时加载最近照片
-            document.addEventListener('DOMContentLoaded', function() {
-            });
-            // 聊天相关功能
-            let chatHistory = [];
 
-            function sendMessage() {
-                const input = document.getElementById('chat-input');
-                const button = document.getElementById('send-button');
-                const message = input.value.trim();
-                
-                if (!message) {
-                    return;
-                }
-                
-                // 添加用户消息到界面
-                addMessageToUI('user', message);
-                input.value = '';
-                
-                // 禁用发送按钮，显示加载状态
-                button.disabled = true;
-                button.innerHTML = '<span style="font-size: 14px;">发送中...</span>';
-                
-                // 发送到后端
-                fetch('/api/chat', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ message: message })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    button.disabled = false;
-                    button.innerHTML = '发送';
-                    
-                    if (data.success) {
-                        if (data.interrupted) {
-                            addMessageToUI('assistant', '⏸️ 对话已被打断');
-                        } else {
-                            addMessageToUI('assistant', data.response);
-                        }
-                    } else {
-                        addMessageToUI('assistant', `❌ 错误: ${data.error || '未知错误'}`);
-                    }
-                })
-                .catch(error => {
-                    console.error('发送消息失败:', error);
-                    button.disabled = false;
-                    button.innerHTML = '发送';
-                    addMessageToUI('assistant', '❌ 网络错误，请稍后重试');
-                });
-            }
+        document.body.appendChild(viewiewer);
 
-            function addMessageToUI(sender, text) {
-                const chatHistoryDiv = document.getElementById('chat-history');
-                
-                // 如果当前显示的是"暂无对话记录"，先清除
-                if (chatHistoryDiv.querySelector('.message-container') && 
-                    chatHistoryDiv.querySelector('.message-container').innerText.includes('暂无对话记录')) {
-                    chatHistoryDiv.innerHTML = '';
-                }
-                
-                // 创建消息元素
-                const messageDiv = document.createElement('div');
-                messageDiv.style.marginBottom = '15px';
-                
-                if (sender === 'user') {
-                    messageDiv.innerHTML = `
+        viewer.onclick = function (e) {
+          if (e.target === this) {
+            document.body.removeChild(this);
+          }
+        };
+      }
+
+      // 日志辅助函数
+      function addToLog(message, type) {
+        const logEntry = {
+          time: new Date().toLocaleTimeString(),
+          type: type,
+          text: message,
+        };
+
+        fetch("/log_assistant", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(logEntry),
+        }).catch(console.error);
+      }
+
+      // 页面加载时加载最近照片
+      document.addEventListener("DOMContentLoaded", function () {});
+      // 聊天相关功能
+      let chatHistory = [];
+
+      function sendMessage() {
+        const input = document.getElementById("chat-input");
+        const button = document.getElementById("send-button");
+        const message = input.value.trim();
+
+        if (!message) {
+          return;
+        }
+
+        // 添加用户消息到界面
+        addMessageToUI("user", message);
+        input.value = "";
+
+        // 禁用发送按钮，显示加载状态
+        button.disabled = true;
+        button.innerHTML = '<span style="font-size: 14px;">发送中...</span>';
+
+        // 发送到后端
+        fetch("/api/chat", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ message: message }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            button.disabled = false;
+            button.innerHTML = "发送";
+
+            if (data.success) {
+              if (data.interrupted) {
+                addMessageToUI("assistant", "⏸️ 对话已被打断");
+              } else {
+                addMessageToUI("assistant", data.response);
+              }
+            } else {
+              addMessageToUI(
+                "assistant",
+                `❌ 错误: ${data.error || "未知错误"}`,
+              );
+            }
+          })
+          .catch((error) => {
+            console.error("发送消息失败:", error);
+            button.disabled = false;
+            button.innerHTML = "发送";
+            addMessageToUI("assistant", "❌ 网络错误，请稍后重试");
+          });
+      }
+
+      function addMessageToUI(sender, text) {
+        const chatHistoryDiv = document.getElementById("chat-history");
+
+        // 如果当前显示的是"暂无对话记录"，先清除
+        if (
+          chatHistoryDiv.querySelector(".message-container") &&
+          chatHistoryDiv
+            .querySelector(".message-container")
+            .innerText.includes("暂无对话记录")
+        ) {
+          chatHistoryDiv.innerHTML = "";
+        }
+
+        // 创建消息元素
+        const messageDiv = document.createElement("div");
+        messageDiv.style.marginBottom = "15px";
+
+        if (sender === "user") {
+          messageDiv.innerHTML = `
                         <div style="
                             display: flex;
                             justify-content: flex-end;
@@ -1113,8 +1320,8 @@ body {
                             </div>
                         </div>
                     `;
-                } else {
-                    messageDiv.innerHTML = `
+        } else {
+          messageDiv.innerHTML = `
                         <div style="margin-bottom: 5px;">
                             <div style="font-size: 12px; color: #666; margin-left: 5px;">
                                 🤖 AI助手
@@ -1132,30 +1339,33 @@ body {
                             </div>
                         </div>
                     `;
-                }
-                
-                chatHistoryDiv.appendChild(messageDiv);
-                
-                // 保存到历史记录
-                chatHistory.push({
-                    sender: sender,
-                    text: text,
-                    time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
-                });
-                
-                // 滚动到底部
-                chatHistoryDiv.scrollTop = chatHistoryDiv.scrollHeight;
-                
-                // 限制历史记录数量
-                if (chatHistory.length > 50) {
-                    chatHistory.shift();
-                }
-            }
+        }
 
-            function setQuickQuestion(question) {
-                document.getElementById('chat-input').value = question;
-                document.getElementById('chat-input').focus();
-            }
-        </script>
-    </body>
+        chatHistoryDiv.appendChild(messageDiv);
+
+        // 保存到历史记录
+        chatHistory.push({
+          sender: sender,
+          text: text,
+          time: new Date().toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+          }),
+        });
+
+        // 滚动到底部
+        chatHistoryDiv.scrollTop = chatHistoryDiv.scrollHeight;
+
+        // 限制历史记录数量
+        if (chatHistory.length > 50) {
+          chatHistory.shift();
+        }
+      }
+
+      function setQuickQuestion(question) {
+        document.getElementById("chat-input").value = question;
+        document.getElementById("chat-input").focus();
+      }
+    </script>
+  </body>
 </html>
