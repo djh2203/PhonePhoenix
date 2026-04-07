@@ -122,7 +122,7 @@ nano config.json   # 使用 vim 或 nano 编辑
 
 Place your audio files (e.g., greetings, responses) in `~/answers` directory (path can be changed in config.json). Filenames must match those in `audio_commands`.
 
-例如：`dzh.mp3`、`zx.mp3` 等。
+例如：`1nh.mp3`（你好）、`2zsh.mp3`（早上好）、`3wa.mp3`（晚安）等。
 
 ### 6. 授予 Termux 必要的权限
 
@@ -158,11 +158,16 @@ PhonePhoenix/
 ├── index.html             # Web 界面 | Web interface (should be placed in the same directory as app.py)
 ├── c4boom.mp3             # CS2 C4爆炸音效 | CS2 C4 Explosion Sound Effect
 ├── manbo.mp3              # 曼波唤醒音效（可加） | Mambo Wake-Up Sound Effect (Optional)
-├── zaijian.mp3            # CS2 C4爆炸音效 | Mambo Program Exit Sound Effect
+├── zaijian.mp3            # 曼波退出音效 | Mambo Program Exit Sound Effect
 └── answers/               # 音频文件存放目录（可配置） | Audio files directory (configurable)
-    ├── dzh.mp3
-    ├── zx.mp3
-    └── ...
+    ├── 1nh.mp3            # 你好
+    ├── 2zsh.mp3           # 早上好
+    ├── 3wa.mp3            # 晚安
+    ├── 4zj.mp3            # 再见
+    ├── 5xx.mp3            # 谢谢
+    ├── 6dbq.mp3           # 对不起
+    ├── 8dzh.mp3           # 打招呼
+    └── 9xw.mp3            # 新闻
 ```
 
 ---

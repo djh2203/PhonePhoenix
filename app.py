@@ -19,13 +19,6 @@ import atexit
 import base64
 import tempfile
 
-# 可选依赖：PIL 用于图像处理（当前未使用，保留以备将来扩展）
-try:
-    from PIL import Image
-    HAS_PIL = True
-except ImportError:
-    HAS_PIL = False
-
 # 可选依赖：助手模块，处理自然语言命令
 try:
     from assistant import process_command
