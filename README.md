@@ -270,10 +270,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ---
 
 ## 📸 界面预览 | Screenshots
-![1.png](https://img2.nloln.de/file/BQACAgUAAyEGAASLVN5eAAIOOmnWEvxt165QgJeBuftP0aw0cz_gAALrIAAC7JewVtP9Kunxev-IOwQ.png)
-![2.png](https://img2.nloln.de/file/BQACAgUAAyEGAASLVN5eAAIOO2nWEv7Dy0aWwpeotd88uM68GDjJAALsIAAC7JewVgr3slibk5EKOwQ.png)
-![3.png](https://img2.nloln.de/file/BQACAgUAAyEGAASLVN5eAAIOPGnWEv-sTcS2x5TFT_7o6obqB7vnAALtIAAC7JewVmGOCMIFIn4COwQ.png)
-![4.png](https://img2.nloln.de/file/BQACAgUAAyEGAASLVN5eAAIOPWnWEwAB2uHmc13tME62ccSw0tk4fgAC7iAAAuyXsFYHQPg5TtognTsE.png)
+![效果图1](images/1.png)
+![效果图1](images/2.png)
+![效果图1](images/3.png)
+![效果图1](images/4.png)
 ---
 
 ## 📬 联系方式 | Contact
