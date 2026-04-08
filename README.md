@@ -270,7 +270,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ---
 
 ## 📸 界面预览 | Screenshots
-![效果图](images/Screenshots.png)
+![效果图1](images/1.png)
+![效果图1](images/2.png)
+![效果图1](images/3.png)
+![效果图1](images/4.png)
 ---
 
 ## 📬 联系方式 | Contact
